@@ -16,11 +16,11 @@ public class PreGameMenuController {
     }
 
     public void handleStartGame() {
-//        if (view != null) {
-//            if (view.getPlayButton().isChecked()) {
-//                Main.getMain().getScreen().dispose();
-//                Main.getMain().setScreen(new GameView(new GameController(), GameAssetManager.getManager().getSkin()));
-//            }
-//        }
+        if (view != null) {
+            if (view.getPlayButton().isChecked()) {
+                Main.getMain().getScreen().dispose();
+                Main.getMain().setScreen(new GameView(new GameController(), GameAssetManager.getManager().getSkin()));
+            }
+        }
     }
 }

@@ -11,7 +11,7 @@ public class GameAssetManager {
 
     // player1
     private String[] player1_images;
-    private final Texture[] player1_texture = new Texture[player1_images.length];
+    private Texture[] player1_texture;
     private Animation<Texture> player1_animation;
 
     // gun
@@ -42,7 +42,8 @@ public class GameAssetManager {
             player1_images[i] = "player/player1/Idle_" + i + ".png";
         }
 
-        for (int i = 0; i < player1_texture.length; i++) {
+        player1_texture = new Texture[6];
+        for (int i = 0; i < player1_images.length; i++) {
             player1_texture[i] = new Texture(Gdx.files.internal(player1_images[i]));
         }
         player1_animation = new Animation<>(0.1f, player1_texture);

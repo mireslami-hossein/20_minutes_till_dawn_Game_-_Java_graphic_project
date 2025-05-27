@@ -63,10 +63,10 @@ public class PreGameMenuView implements Screen {
         ScreenUtils.clear(0, 0, 0, 1);
 
         controller.handleStartGame();
-//        Main.getBatch().begin();
-//        Main.getBatch().end();
-//
-//        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        Main.getBatch().begin();
+        Main.getBatch().end();
+
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
 

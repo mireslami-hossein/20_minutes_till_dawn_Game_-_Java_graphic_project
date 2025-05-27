@@ -53,7 +53,7 @@ public class MainMenuView implements Screen {
         Main.getBatch().begin();
         Main.getBatch().end();
 
-//        controller.handleMainMenuButton();
+        controller.handleMainMenuButton();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
