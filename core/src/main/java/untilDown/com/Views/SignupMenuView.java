@@ -123,10 +123,10 @@ public class SignupMenuView implements Screen {
         table.add(signupButton).width(App.fieldWidth);
 
         table.row().padTop(20);
-        table.add(loginAsGuestButton).width(App.fieldWidth);
+        table.add(goToLoginMenuButton).width(App.fieldWidth);
 
         table.row().padTop(20);
-        table.add(goToLoginMenuButton).width(App.fieldWidth);
+        table.add(loginAsGuestButton).width(App.fieldWidth);
 
 
         table.row().padTop(50);

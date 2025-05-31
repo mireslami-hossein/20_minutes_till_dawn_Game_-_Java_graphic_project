@@ -61,14 +61,17 @@ public class LoginMenuController {
     public String handleSetNewPass(String username, String password, String answer) {
         Result result;
 
-        if (!(result = checkUsernameExist(username)).success
-            || !(result = checkPassword(password)).success) {
+        if (!(result = checkUsernameExist(username)).success) {
             return result.message;
         }
 
         User user = App.getApp().getUserByUsername(username);
         if (!user.getAnswer().equals(answer))
             return "Your answer to question is incorrect!";
+
+        if (!(result = checkPassword(password)).success) {
+            return result.message;
+        }
 
         user.setPassword(password);
         Main.getMain().navigateToLoginMenu();
