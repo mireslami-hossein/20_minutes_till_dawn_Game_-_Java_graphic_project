@@ -25,6 +25,8 @@ public class Main extends Game {
     // View screens
     private SignupMenuView signupMenuView;
     private LoginMenuView loginMenuView;
+    private ForgetPassView forgetPassView;
+
     private MainMenuView mainMenuView;
     private PreGameMenuView preGameMenuView;
     private GameView gameView;
@@ -57,25 +59,24 @@ public class Main extends Game {
 
 
     public void navigateToSignupMenu() {
-        if (signupMenuView == null) {
-            signupMenuView = new SignupMenuView(new SignupMenuController(), GameAssetManager.getManager().getSkin());
-        }
+        signupMenuView = new SignupMenuView(new SignupMenuController(), GameAssetManager.getManager().getSkin());
+
         setScreen(signupMenuView);
     }
 
     public void navigateToLoginMenu() {
-        if (loginMenuView == null) {
-            loginMenuView = new LoginMenuView(new LoginMenuController(), GameAssetManager.getManager().getSkin());
-        }
+        loginMenuView = new LoginMenuView(new LoginMenuController(), GameAssetManager.getManager().getSkin());
         setScreen(loginMenuView);
+    }
+    public void navigateToForgetPass() {
+
+        forgetPassView = new ForgetPassView(loginMenuView.getController(), GameAssetManager.getManager().getSkin());
+
+        setScreen(forgetPassView);
     }
 
     public void navigateToMainMenu() {
-        if (mainMenuView == null) {
-            mainMenuView = new MainMenuView(new MainMenuController(), GameAssetManager.getManager().getSkin());
-        }
+        mainMenuView = new MainMenuView(new MainMenuController(), GameAssetManager.getManager().getSkin());
         setScreen(mainMenuView);
     }
-
-
 }

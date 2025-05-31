@@ -25,8 +25,6 @@ public class MainMenuView implements Screen {
         this.gameTitle = new Label("20 Minutes Until Dawn", skin);
         this.playButton = new TextButton("Play", skin);
         this.textField = new TextField("enter your username", skin);
-
-        this.table = new Table();
     }
 
 
@@ -35,6 +33,9 @@ public class MainMenuView implements Screen {
         // This 2 line should be in all menus
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage); // add input processor
+
+        table = new Table();
+        stage.clear();
 
         table.setFillParent(true); // to center the table in the page
         table.center();
@@ -80,7 +81,9 @@ public class MainMenuView implements Screen {
 
     @Override
     public void dispose() {
-
+        if (stage != null) {
+            stage.dispose();
+        }
     }
 
 

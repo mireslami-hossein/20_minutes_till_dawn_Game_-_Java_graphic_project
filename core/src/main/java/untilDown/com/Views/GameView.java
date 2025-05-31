@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import untilDown.com.Controllers.GameController;
 import untilDown.com.Main;
 
@@ -25,14 +26,15 @@ public class GameView implements Screen, InputProcessor {
         this.controller = controller;
         controller.setView(this);
 
-        table = new Table();
         playButton = new TextButton("Play", skin);
     }
 
 
     @Override
     public void show() {
-        stage = new Stage();
+        stage = new Stage(new ScreenViewport());
+        table = new Table();
+        stage.clear();
         Gdx.input.setInputProcessor(this);
 
         table.setFillParent(true);

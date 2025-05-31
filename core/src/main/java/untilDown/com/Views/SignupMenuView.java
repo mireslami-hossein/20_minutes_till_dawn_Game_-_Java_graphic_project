@@ -46,7 +46,6 @@ public class SignupMenuView implements Screen {
         this.controller = controller;
         controller.setView(this);
 
-        table = new Table();
         gameTitleLabel = new Label(App.getApp().getGameTitle(), skin);
         signupMenuTitle = new Label("Signup Menu", skin);
 
@@ -71,6 +70,8 @@ public class SignupMenuView implements Screen {
     @Override
     public void show() {
         stage = new Stage();
+        table = new Table();
+        stage.clear();
         Gdx.input.setInputProcessor(stage);
 
         Table rootTable = new Table();
@@ -202,6 +203,7 @@ public class SignupMenuView implements Screen {
 
     @Override
     public void dispose() {
+        stage.dispose();
 
     }
 }

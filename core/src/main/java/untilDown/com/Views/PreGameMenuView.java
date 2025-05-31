@@ -37,6 +37,8 @@ public class PreGameMenuView implements Screen {
     @Override
     public void show() {
         stage = new Stage(new ScreenViewport());
+        table = new Table();
+        stage.clear();
         Gdx.input.setInputProcessor(stage);
 
         // Array for select Hero dropdown
@@ -92,7 +94,9 @@ public class PreGameMenuView implements Screen {
 
     @Override
     public void dispose() {
-
+        if (stage != null) {
+            stage.dispose();
+        }
     }
 
     public TextButton getPlayButton() {

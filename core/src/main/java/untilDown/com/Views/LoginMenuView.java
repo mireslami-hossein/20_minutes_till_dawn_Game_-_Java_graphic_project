@@ -30,6 +30,7 @@ public class LoginMenuView implements Screen, InputProcessor {
 
     private TextButton loginButton;
     private TextButton forgotPasswordButton;
+    private TextButton backToSignupMenuButton;
 
     private Table table;
 
@@ -49,6 +50,7 @@ public class LoginMenuView implements Screen, InputProcessor {
 
         loginButton = new TextButton("Enter", skin);
         forgotPasswordButton= new TextButton("Forget Password", skin);
+        backToSignupMenuButton = new TextButton("Back To Register", skin);
 
         alert = new Label("", skin);
     }
@@ -56,6 +58,8 @@ public class LoginMenuView implements Screen, InputProcessor {
     @Override
     public void show() {
         stage = new Stage();
+        table = new Table();
+        stage.clear(); // To load the stage correct after returning to this screen
         Gdx.input.setInputProcessor(stage);
 
         Table rootTable = new Table();
@@ -94,6 +98,9 @@ public class LoginMenuView implements Screen, InputProcessor {
         table.row().padTop(20);
         table.add(forgotPasswordButton).width(App.fieldWidth);
 
+        table.row().padTop(20);
+        table.add(backToSignupMenuButton).width(App.fieldWidth);
+
         table.row().padTop(50);
         alert.setColor(Color.RED);
 
@@ -109,7 +116,14 @@ public class LoginMenuView implements Screen, InputProcessor {
         forgotPasswordButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Main.getMain().navigateToForgetPass();
+            }
+        });
 
+        backToSignupMenuButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Main.getMain().navigateToSignupMenu();
             }
         });
         rootTable.add(table);
@@ -125,6 +139,10 @@ public class LoginMenuView implements Screen, InputProcessor {
                 button.setText(field.isPasswordMode() ? "Show" : "Hide");
             }
         });
+    }
+
+    public LoginMenuController getController() {
+        return controller;
     }
 
     @Override
@@ -158,7 +176,13 @@ public class LoginMenuView implements Screen, InputProcessor {
     }
 
     @Override
-    public void dispose() {}
+    public void dispose() {
+        if (stage != null) {
+            stage.dispose();
+        }
+    }
+
+
 
     @Override
     public boolean keyDown(int keycode) {
