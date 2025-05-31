@@ -1,69 +1,54 @@
 package untilDown.com.Views;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.TextField;
-import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import untilDown.com.Controllers.SignupMenuController;
+import com.badlogic.gdx.utils.ScreenUtils;
+import untilDown.com.Controllers.LoginMenuController;
 import untilDown.com.Main;
 import untilDown.com.Models.App;
-import untilDown.com.Models.User;
 
-
-
-public class SignupMenuView implements Screen {
-    private SignupMenuController controller;
+public class LoginMenuView implements Screen, InputProcessor {
+    private LoginMenuController controller;
     private Stage stage;
 
     private Label gameTitleLabel;
-    private Label signupMenuTitle;
+    private Label loginMenuTitle;
     private TextField username;
 
     private TextField password;
     private TextButton showPassword;
-    private TextField confirmPassword;
-    private TextButton showConfirmPassword;
-
-    private Label securityQuestionLabel;
-    private TextField answerField;
 
     private Label alert;
 
-    private TextButton signupButton;
-    private TextButton loginAsGuestButton;
-    private TextButton goToLoginMenuButton;
+    private TextButton loginButton;
+    private TextButton forgotPasswordButton;
 
     private Table table;
 
-    public SignupMenuView(SignupMenuController controller, Skin skin) {
+    public LoginMenuView(LoginMenuController controller, Skin skin) {
         this.controller = controller;
         controller.setView(this);
 
         table = new Table();
         gameTitleLabel = new Label(App.getApp().getGameTitle(), skin);
-        signupMenuTitle = new Label("Signup Menu", skin);
+        loginMenuTitle = new Label("Login Menu", skin);
 
         username = new TextField("", skin);
         password = new TextField("", skin);
 
         showPassword = new TextButton("Show", skin);
-        showConfirmPassword = new TextButton("Show", skin);
 
-        confirmPassword = new TextField("", skin);
 
-        securityQuestionLabel = new Label("What was your first school name?", skin);
-        answerField = new TextField("", skin);
-
-        signupButton = new TextButton("Sign Up", skin);
-        loginAsGuestButton = new TextButton("Login As Guest", skin);
-        goToLoginMenuButton = new TextButton("Go Login Menu", skin);
+        loginButton = new TextButton("Enter", skin);
+        forgotPasswordButton= new TextButton("Forget Password", skin);
 
         alert = new Label("", skin);
     }
@@ -85,8 +70,8 @@ public class SignupMenuView implements Screen {
         rootTable.add(gameTitleLabel).expandX();
 
         table.row().padTop(75);
-        signupMenuTitle.setFontScale(2f);
-        table.add(signupMenuTitle).center();
+        loginMenuTitle.setFontScale(2f);
+        table.add(loginMenuTitle).center();
 
         rootTable.row().padTop(75);
         table.row().padTop(50);
@@ -100,59 +85,31 @@ public class SignupMenuView implements Screen {
         table.add(password).width(App.fieldWidth).padBottom(20);
         table.add(showPassword).width(200).padLeft(10);
 
-        table.row();
-        confirmPassword.setMessageText("Confirm Password");
-        confirmPassword.setPasswordMode(true);
-        confirmPassword.setPasswordCharacter('*');
-        table.add(confirmPassword).width(App.fieldWidth).padBottom(30);
-        table.add(showConfirmPassword).width(200).padLeft(10);
-
         // listeners for show password
         addShowPassListener(showPassword, password);
-        addShowPassListener(showConfirmPassword, confirmPassword);
-
-        table.row();
-        table.add(securityQuestionLabel);
-
-        table.row();
-        answerField.setMessageText("Answer of Security question");
-        table.add(answerField).width(App.fieldWidth);
 
         table.row().padTop(70);
-        table.add(signupButton).width(App.fieldWidth);
+        table.add(loginButton).width(App.fieldWidth);
 
         table.row().padTop(20);
-        table.add(loginAsGuestButton).width(App.fieldWidth);
-
-        table.row().padTop(20);
-        table.add(goToLoginMenuButton).width(App.fieldWidth);
-
+        table.add(forgotPasswordButton).width(App.fieldWidth);
 
         table.row().padTop(50);
         alert.setColor(Color.RED);
 
         table.add(alert);
 
-        signupButton.addListener(new ChangeListener() {
+        loginButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                 alert.setText(controller.handleSignup(username.getText(), password.getText(), confirmPassword.getText(), answerField.getText()));
+                alert.setText(controller.handleLogin(username.getText(), password.getText()));
             }
         });
 
-        loginAsGuestButton.addListener(new ChangeListener() {
+        forgotPasswordButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                int id = (int) (Math.random()*100);
-                App.getApp().setLoggedInUser(new User("Guest-"+id, "", "", false));
-                Main.getMain().navigateToMainMenu();
-            }
-        });
 
-        goToLoginMenuButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Main.getMain().navigateToLoginMenu();
             }
         });
         rootTable.add(table);
@@ -201,7 +158,54 @@ public class SignupMenuView implements Screen {
     }
 
     @Override
-    public void dispose() {
+    public void dispose() {}
 
+    @Override
+    public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.ESCAPE) {
+            Main.getMain().navigateToSignupMenu();
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean keyUp(int keycode) {
+        return false;
+    }
+
+    @Override
+    public boolean keyTyped(char character) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
+        return false;
+    }
+
+    @Override
+    public boolean mouseMoved(int screenX, int screenY) {
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
+        return false;
     }
 }

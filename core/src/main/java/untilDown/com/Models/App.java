@@ -2,6 +2,7 @@ package untilDown.com.Models;
 
 import com.badlogic.gdx.Gdx;
 import java.util.ArrayList;
+import java.util.List;
 
 public class App {
     private static App app;
@@ -10,7 +11,9 @@ public class App {
     public static int fieldWidth = 600;
 
     private ArrayList<User> users = new ArrayList<>();
-
+    {
+        addUser(new User("ali", "ali", "ali", true));
+    }
     private User loggedInUser = null;
 
 

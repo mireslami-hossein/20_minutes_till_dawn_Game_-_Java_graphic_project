@@ -7,4 +7,8 @@ public enum Avatar {
     public static Avatar getRandomAvatar() {
         return Avatar.values()[(int) (Math.random()*Avatar.values().length)];
     }
+
+    public String getAddress() {
+        return ("avatar/" + ordinal() + 1 + ".png");
+    }
 }

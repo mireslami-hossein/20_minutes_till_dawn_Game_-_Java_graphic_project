@@ -1,5 +1,6 @@
 package untilDown.com.Controllers;
 
+import untilDown.com.Main;
 import untilDown.com.Models.App;
 import untilDown.com.Models.Result;
 import untilDown.com.Models.User;
@@ -25,7 +26,7 @@ public class SignupMenuController {
         User user = new User(username, password, answer, true);
         App.getApp().addUser(user);
         App.getApp().setLoggedInUser(user);
-
+        Main.getMain().navigateToLoginMenu();
         return "";
     }
 
