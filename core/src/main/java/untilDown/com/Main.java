@@ -10,8 +10,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import untilDown.com.Controllers.MainMenuController;
+import untilDown.com.Controllers.SignupMenuController;
 import untilDown.com.Models.GameAssetManager;
 import untilDown.com.Views.MainMenuView;
+import untilDown.com.Views.SignupMenuView;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
 public class Main extends Game {
@@ -25,7 +27,7 @@ public class Main extends Game {
         main = this;
         batch = new SpriteBatch();
 
-        main.setScreen(new MainMenuView(new MainMenuController(), GameAssetManager.getManager().getSkin()));
+        main.setScreen(new SignupMenuView(new SignupMenuController(), GameAssetManager.getManager().getSkin()));
     }
 
     @Override
