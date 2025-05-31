@@ -7,12 +7,15 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
 import untilDown.com.Controllers.MainMenuController;
 import untilDown.com.Controllers.SignupMenuController;
 import untilDown.com.Models.GameAssetManager;
+import untilDown.com.Views.GameView;
 import untilDown.com.Views.MainMenuView;
+import untilDown.com.Views.PreGameMenuView;
 import untilDown.com.Views.SignupMenuView;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
@@ -21,13 +24,19 @@ public class Main extends Game {
 
     private static SpriteBatch batch;
 
+    // View screens
+    private SignupMenuView signupMenuView;
+//  TODO:  private LoginMenuView loginMenuView;
+    private MainMenuView mainMenuView;
+    private PreGameMenuView preGameMenuView;
+    private GameView gameView;
 
     @Override
     public void create() {
         main = this;
         batch = new SpriteBatch();
 
-        main.setScreen(new SignupMenuView(new SignupMenuController(), GameAssetManager.getManager().getSkin()));
+        navigateToSignupMenu();
     }
 
     @Override
@@ -47,4 +56,21 @@ public class Main extends Game {
     public static Main getMain() {
         return main;
     }
+
+
+    public void navigateToSignupMenu() {
+        if (signupMenuView == null) {
+            signupMenuView = new SignupMenuView(new SignupMenuController(), GameAssetManager.getManager().getSkin());
+        }
+        setScreen(signupMenuView);
+    }
+
+    public void navigateToMainMenu() {
+        if (mainMenuView == null) {
+            mainMenuView = new MainMenuView(new MainMenuController(), GameAssetManager.getManager().getSkin());
+        }
+        setScreen(mainMenuView);
+    }
+
+
 }

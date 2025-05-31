@@ -1,6 +1,8 @@
 package untilDown.com.Controllers;
 
+import untilDown.com.Models.App;
 import untilDown.com.Models.Result;
+import untilDown.com.Models.User;
 import untilDown.com.Views.SignupMenuView;
 
 import java.util.regex.Pattern;
@@ -12,18 +14,26 @@ public class SignupMenuController {
         this.view = view;
     }
 
-    public String handleSignup(String username, String password, String confirmPassword) {
+    public String handleSignup(String username, String password, String confirmPassword, String answer) {
         Result result;
 
-        if (!(result = checkPassword(password, confirmPassword)).success) {
+        if (!(result = checkUsername(username)).success ||
+            !(result = checkPassword(password, confirmPassword)).success) {
             return result.message;
         }
+
+        User user = new User(username, password, answer, true);
+        App.getApp().addUser(user);
+        App.getApp().setLoggedInUser(user);
 
         return "";
     }
 
 
     public Result checkUsername(String username) {
+        User user = App.getApp().getUserByUsername(username);
+        if (user != null)
+            return new Result(false, "Username is already taken!");
         return new Result(true, "");
     }
 

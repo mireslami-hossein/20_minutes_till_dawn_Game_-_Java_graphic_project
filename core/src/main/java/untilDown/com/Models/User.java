@@ -5,11 +5,16 @@ public class User {
     private String password;
 
     private String answer;
+    private UserType userType;
 
-    public User(String username, String password, String answer) {
+    private Avatar avatar = Avatar.getRandomAvatar();
+
+    public User(String username, String password, String answer, boolean isRegistered) {
         this.username = username;
         this.password = password;
         this.answer = answer;
+
+        this.userType = isRegistered ? UserType.registered : UserType.Guest;
     }
 
     public String getUsername() {
@@ -23,4 +28,12 @@ public class User {
     public String getAnswer() {
         return answer;
     }
+
+    public boolean isGuest() {
+        return userType == UserType.Guest;
+    }
+}
+
+enum UserType {
+    Guest, registered
 }

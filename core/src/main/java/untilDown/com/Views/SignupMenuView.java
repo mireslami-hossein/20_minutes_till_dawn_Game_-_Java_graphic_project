@@ -15,6 +15,7 @@ import untilDown.com.Controllers.SignupMenuController;
 import untilDown.com.Main;
 import untilDown.com.Models.App;
 import untilDown.com.Models.GameAssetManager;
+import untilDown.com.Models.User;
 
 import java.awt.event.TextListener;
 
@@ -38,6 +39,7 @@ public class SignupMenuView implements Screen {
     private Label alert;
 
     private TextButton signupButton;
+    private TextButton loginAsGuestButton;
 
     private Table table;
 
@@ -60,8 +62,10 @@ public class SignupMenuView implements Screen {
         securityQuestionLabel = new Label("What was your first school name?", skin);
         answerField = new TextField("", skin);
 
-        alert = new Label("", skin);
         signupButton = new TextButton("Sign Up", skin);
+        loginAsGuestButton = new TextButton("Login As Guest", skin);
+
+        alert = new Label("", skin);
     }
 
     @Override
@@ -69,17 +73,22 @@ public class SignupMenuView implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        table.setFillParent(true); // to center the table in the page
+        Table rootTable = new Table();
+
+        rootTable.setFillParent(true); // to center the table in the page
+        rootTable.center();
+
         table.center();
 
         gameTitleLabel.setFontScale(4f);
         gameTitleLabel.setColor(Color.RED);
-        table.add(gameTitleLabel);
+        rootTable.add(gameTitleLabel).expandX();
 
         table.row().padTop(75);
         signupMenuTitle.setFontScale(2f);
-        table.add(signupMenuTitle);
+        table.add(signupMenuTitle).center();
 
+        rootTable.row().padTop(75);
         table.row().padTop(50);
         username.setMessageText("Username");
         table.add(username).width(App.fieldWidth).padBottom(20);
@@ -89,14 +98,14 @@ public class SignupMenuView implements Screen {
         password.setPasswordMode(true);
         password.setPasswordCharacter('*');
         table.add(password).width(App.fieldWidth).padBottom(20);
-        table.add(showPassword).width(200).padLeft(5);
+        table.add(showPassword).width(200).padLeft(10);
 
         table.row();
         confirmPassword.setMessageText("Confirm Password");
         confirmPassword.setPasswordMode(true);
         confirmPassword.setPasswordCharacter('*');
         table.add(confirmPassword).width(App.fieldWidth).padBottom(30);
-        table.add(showConfirmPassword).width(200).padLeft(5);
+        table.add(showConfirmPassword).width(200).padLeft(10);
 
         // listeners for show password
         addShowPassListener(showPassword, password);
@@ -107,10 +116,13 @@ public class SignupMenuView implements Screen {
 
         table.row();
         answerField.setMessageText("Answer of Security question");
-        table.add(answerField).width(App.fieldWidth).padBottom(50);
+        table.add(answerField).width(App.fieldWidth);
 
-        table.row();
+        table.row().padTop(70);
         table.add(signupButton).width(App.fieldWidth);
+
+        table.row().padTop(20);
+        table.add(loginAsGuestButton).width(App.fieldWidth);
 
         table.row().padTop(50);
         alert.setColor(Color.RED);
@@ -120,11 +132,20 @@ public class SignupMenuView implements Screen {
         signupButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                 alert.setText(controller.handleSignup(username.getText(), password.getText(), confirmPassword.getText()));
+                 alert.setText(controller.handleSignup(username.getText(), password.getText(), confirmPassword.getText(), answerField.getText()));
             }
         });
 
-        stage.addActor(table);
+        loginAsGuestButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                int id = (int) (Math.random()*100);
+                App.getApp().setLoggedInUser(new User("Guest-"+id, "", "", false));
+                Main.getMain().navigateToMainMenu();
+            }
+        });
+        rootTable.add(table);
+        stage.addActor(rootTable);
     }
 
     public void addShowPassListener(TextButton button, TextField field) {

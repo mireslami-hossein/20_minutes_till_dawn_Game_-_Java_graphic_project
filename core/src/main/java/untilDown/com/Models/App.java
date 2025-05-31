@@ -11,6 +11,9 @@ public class App {
 
     private ArrayList<User> users = new ArrayList<>();
 
+    private User loggedInUser = null;
+
+
     public static App getApp() {
         if (app == null) {
             app = new App();
@@ -18,6 +21,7 @@ public class App {
         return app;
     }
 
+    // Constants
     public String getGameTitle() {
         return gameTitle;
     }
@@ -30,6 +34,7 @@ public class App {
         return Gdx.graphics.getHeight();
     }
 
+    // Users
     public User getUserByUsername(String username) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {
@@ -37,5 +42,13 @@ public class App {
             }
         }
         return null;
+    }
+
+    public void addUser(User user) {
+        users.add(user);
+    }
+
+    public void setLoggedInUser(User loggedInUser) {
+        this.loggedInUser = loggedInUser;
     }
 }
