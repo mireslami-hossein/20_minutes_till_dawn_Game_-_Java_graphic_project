@@ -6,8 +6,6 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 
 public class App {
     private static App app;
@@ -17,6 +15,8 @@ public class App {
 
     private ArrayList<User> users = new ArrayList<>();
     private User loggedInUser = null;
+
+    private boolean autoReloadEnabled = true;
 
     private App() {
         loadUsers();
@@ -81,5 +81,14 @@ public class App {
                 users.add(user);
             }
         }
+    }
+
+    // auto reload
+    public boolean isAutoReloadEnabled() {
+        return autoReloadEnabled;
+    }
+
+    public void setAutoReloadEnabled(boolean autoReloadEnabled) {
+        this.autoReloadEnabled = autoReloadEnabled;
     }
 }

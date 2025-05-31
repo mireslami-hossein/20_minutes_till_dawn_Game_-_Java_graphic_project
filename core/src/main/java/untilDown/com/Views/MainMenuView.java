@@ -9,11 +9,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import untilDown.com.Controllers.MainMenuController;
 import untilDown.com.Main;
 import untilDown.com.Models.App;
+import untilDown.com.Models.GameAssetManager;
+import untilDown.com.Models.GameAssetManager.MusicOfGame;
+import untilDown.com.Models.GameKeysManager;
 import untilDown.com.Models.User;
+
+import java.util.HashMap;
 
 public class MainMenuView implements Screen {
     private Stage stage;
@@ -33,9 +37,14 @@ public class MainMenuView implements Screen {
     private TextButton savedGameButton;
     private TextButton logoutButton;
 
-
     public Table table;
+
     private final MainMenuController controller;
+
+
+    // windows
+    private Window settingsWindow;
+     private  Window controlsWindow;
 
     public MainMenuView(MainMenuController controller, Skin skin) {
         this.controller = controller;
@@ -61,6 +70,10 @@ public class MainMenuView implements Screen {
         this.savedGameButton = new TextButton("Load Saved Game", skin);
 
         this.logoutButton = new TextButton("Logout", skin);
+
+        // window
+        settingsWindow = new Window("Settings", skin);
+        controlsWindow = new Window("Key Controls", skin);
     }
 
 
@@ -76,7 +89,6 @@ public class MainMenuView implements Screen {
 
 
         Table userDetailsTable = new Table();
-        userDetailsTable.debugTable();
         userDetailsTable.add(avatarImage).size(100, 100).padRight(20);
 
         userDetailsTable.padLeft(100);
@@ -116,6 +128,9 @@ public class MainMenuView implements Screen {
         stage.addActor(table); // To add table to stage of view
 
         setButtonsListener();
+
+        setSettingWindow();
+        setControlsWindow();
     }
 
     //TODO : clean code
@@ -123,7 +138,7 @@ public class MainMenuView implements Screen {
         settingsButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                stage.addActor(settingsWindow);
             }
         });
         profileButton.addListener(new ChangeListener() {
@@ -160,12 +175,133 @@ public class MainMenuView implements Screen {
         logoutButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                App.getApp().setLoggedInUser(null);
-                Main.getMain().navigateToLoginMenu();
+                controller.logoutUser();
             }
         });
 
     }
+
+    private void setSettingWindow() {
+        Skin skin = GameAssetManager.getManager().getSkin();
+        GameAssetManager assetManager = GameAssetManager.getManager();
+
+        settingsWindow.setSize(1000, 1000);
+        settingsWindow.setPosition(
+            Gdx.graphics.getWidth() / 2f - settingsWindow.getWidth() / 2f,
+            Gdx.graphics.getHeight() / 2f - settingsWindow.getHeight() / 2f
+        );
+
+        settingsWindow.pad(20);
+        settingsWindow.defaults().pad(10).left();
+
+        settingsWindow.row();
+        Label musicVolumeLabel = new Label("Music Volume ", skin);
+        musicVolumeLabel.setFontScale(1.5f);
+        settingsWindow.add(musicVolumeLabel);
+
+        settingsWindow.row().padTop(15);
+        Slider musicVolume = new Slider(0, 100, 1, false, skin);
+        musicVolume.setValue(assetManager.getMusicVolume());
+        settingsWindow.add(musicVolume).width(600);
+
+        settingsWindow.row().padTop(30);
+        Label changeMusicLabel = new Label("Background Music ", skin);
+        changeMusicLabel.setFontScale(1.5f);
+        settingsWindow.add(changeMusicLabel);
+
+        settingsWindow.row().padTop(15);
+        SelectBox<String> musicsSelectBox = new SelectBox<>(skin);
+        musicsSelectBox.setItems("Music 1", "Music 2", "Music 3");
+
+        MusicOfGame currentMusic = assetManager.getMusic();
+        musicsSelectBox.setSelectedIndex(currentMusic.ordinal());
+        settingsWindow.add(musicsSelectBox).width(600);
+
+        settingsWindow.row().padTop(30);
+        CheckBox sfxEnable = new CheckBox("Game SFX", skin);
+        sfxEnable.setChecked(assetManager.isSfxEnabled());
+        settingsWindow.add(sfxEnable).width(600);
+
+        settingsWindow.row().padTop(30);
+        TextButton keyControlsButton = new TextButton("Key Controls", skin);
+        keyControlsButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                showControlsWindow();
+            }
+        });
+        settingsWindow.add(keyControlsButton).center();
+
+        settingsWindow.row().padTop(30);
+        CheckBox autoReload = new CheckBox("Auto-Reload", skin);
+        autoReload.setChecked(App.getApp().isAutoReloadEnabled());
+        settingsWindow.add(autoReload).width(600);
+
+        settingsWindow.row().padTop(30);
+        CheckBox whiteBlack = new CheckBox("White-Black", skin);
+        whiteBlack.setChecked(assetManager.isWhiteBlackEnabled());
+        settingsWindow.add(whiteBlack).width(600);
+
+
+        settingsWindow.row().padTop(50);
+        TextButton closeBtn = new TextButton("Back", skin);
+        settingsWindow.add(closeBtn).center();
+        closeBtn.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                assetManager.setMusicVolume(musicVolume.getValue());
+                assetManager.setMusic(musicsSelectBox.getSelectedIndex());
+                // complete
+                settingsWindow.remove();
+            }
+        });
+    }
+
+    public void setControlsWindow() {
+        controlsWindow.setSize(750, 1000);
+
+        controlsWindow.setPosition(
+            Gdx.graphics.getWidth() / 2f - controlsWindow.getWidth() / 2f,
+            Gdx.graphics.getHeight() / 2f - controlsWindow.getHeight() / 2f
+        );
+
+        Table contentTable = new Table();
+        contentTable.pad(20);
+        contentTable.defaults().pad(10).left();
+
+        contentTable.row();
+        GameKeysManager gameKeysManager = GameKeysManager.getManager();
+        HashMap<String, Integer> gameKeys = gameKeysManager.getGameKeys();
+        for (String key : gameKeys.keySet()) {
+            contentTable.row().padTop(20);
+            Label keyWord = new Label(key, GameAssetManager.getManager().getSkin());
+            String keyName = GameKeysManager.getManager().getKeyName(gameKeys.get(key));
+            TextButton button = new TextButton(keyName, GameAssetManager.getManager().getSkin());
+            contentTable.add(keyWord);
+            contentTable.add(button).padRight(15);
+        }
+
+        contentTable.row().padTop(35);
+        TextButton back = new TextButton("Back", GameAssetManager.getManager().getSkin());
+        back.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                controlsWindow.remove();
+            }
+        });
+        contentTable.add(back).colspan(2).center().width(600);
+
+        ScrollPane scrollPane = new ScrollPane(contentTable, GameAssetManager.getManager().getSkin());
+        scrollPane.setFadeScrollBars(false);
+        scrollPane.setScrollingDisabled(true, false);
+
+        controlsWindow.add(scrollPane).expand().fill().pad(10).row();
+    }
+
+    public void showControlsWindow() {
+        stage.addActor(controlsWindow);
+    }
+
 
     @Override
     public void render(float v) {
