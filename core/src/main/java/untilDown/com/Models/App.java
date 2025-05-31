@@ -1,5 +1,6 @@
 package untilDown.com.Models;
 
+import com.badlogic.gdx.Gdx;
 import untilDown.com.Controllers.SignupMenuController;
 
 import java.util.ArrayList;
@@ -21,5 +22,13 @@ public class App {
 
     public String getGameTitle() {
         return gameTitle;
+    }
+
+    public float getWidth() {
+        return Gdx.graphics.getWidth();
+    }
+
+    public float getHeight() {
+        return Gdx.graphics.getHeight();
     }
 }
