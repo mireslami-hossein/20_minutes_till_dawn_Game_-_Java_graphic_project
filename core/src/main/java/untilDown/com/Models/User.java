@@ -8,6 +8,8 @@ public class User {
     private UserType userType;
 
     private Avatar avatar = Avatar.getRandomAvatar();
+    private int score = 0;
+
 
     public User(String username, String password, String answer, boolean isRegistered) {
         this.username = username;
@@ -35,6 +37,14 @@ public class User {
 
     public boolean isGuest() {
         return userType == UserType.Guest;
+    }
+
+    public String getAvatarAddress() {
+        return avatar.getAddress();
+    }
+
+    public int getScore() {
+        return score;
     }
 }
 
