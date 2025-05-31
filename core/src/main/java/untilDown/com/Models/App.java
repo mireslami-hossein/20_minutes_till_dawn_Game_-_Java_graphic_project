@@ -51,6 +51,10 @@ public class App {
         users.add(user);
     }
 
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
+
     public void setLoggedInUser(User loggedInUser) {
         this.loggedInUser = loggedInUser;
     }

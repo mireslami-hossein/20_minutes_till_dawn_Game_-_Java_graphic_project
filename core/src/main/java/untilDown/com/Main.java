@@ -60,7 +60,6 @@ public class Main extends Game {
 
     public void navigateToSignupMenu() {
         signupMenuView = new SignupMenuView(new SignupMenuController(), GameAssetManager.getManager().getSkin());
-
         setScreen(signupMenuView);
     }
 
@@ -69,9 +68,7 @@ public class Main extends Game {
         setScreen(loginMenuView);
     }
     public void navigateToForgetPass() {
-
         forgetPassView = new ForgetPassView(loginMenuView.getController(), GameAssetManager.getManager().getSkin());
-
         setScreen(forgetPassView);
     }
 

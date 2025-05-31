@@ -38,7 +38,6 @@ public class LoginMenuView implements Screen, InputProcessor {
         this.controller = controller;
         controller.setView(this);
 
-        table = new Table();
         gameTitleLabel = new Label(App.getApp().getGameTitle(), skin);
         loginMenuTitle = new Label("Login Menu", skin);
 
