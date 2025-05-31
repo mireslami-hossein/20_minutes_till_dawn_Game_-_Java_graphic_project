@@ -7,9 +7,10 @@ public class User {
     private String answer;
     private UserType userType;
 
-    private Avatar avatar = Avatar.getRandomAvatar();
+    private Avatar avatar;
     private int score = 0;
 
+    public User(){};
 
     public User(String username, String password, String answer, boolean isRegistered) {
         this.username = username;
@@ -17,6 +18,7 @@ public class User {
         this.answer = answer;
 
         this.userType = isRegistered ? UserType.registered : UserType.Guest;
+        this.avatar = Avatar.getRandomAvatar();
     }
 
     public String getUsername() {

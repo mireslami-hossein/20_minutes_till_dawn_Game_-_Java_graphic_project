@@ -67,7 +67,7 @@ public class MainMenuView implements Screen {
     @Override
     public void show() {
         stage = new Stage();
-        table = new Table().debugTable();
+        table = new Table();
 
         Gdx.input.setInputProcessor(stage);
 
@@ -118,6 +118,7 @@ public class MainMenuView implements Screen {
         setButtonsListener();
     }
 
+    //TODO : clean code
     private void setButtonsListener() {
         settingsButton.addListener(new ChangeListener() {
             @Override

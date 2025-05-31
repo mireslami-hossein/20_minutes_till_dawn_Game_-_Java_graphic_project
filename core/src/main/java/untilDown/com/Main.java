@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import untilDown.com.Controllers.LoginMenuController;
 import untilDown.com.Controllers.MainMenuController;
 import untilDown.com.Controllers.SignupMenuController;
+import untilDown.com.Models.App;
 import untilDown.com.Models.GameAssetManager;
 import untilDown.com.Views.*;
 
@@ -47,6 +48,7 @@ public class Main extends Game {
     @Override
     public void dispose() {
         batch.dispose();
+        App.getApp().saveUsers();
     }
 
     public static SpriteBatch getBatch() {

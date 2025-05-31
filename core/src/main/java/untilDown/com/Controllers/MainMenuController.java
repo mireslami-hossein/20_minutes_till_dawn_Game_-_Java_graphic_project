@@ -8,6 +8,4 @@ public class MainMenuController {
     public void setView(MainMenuView view) {
         this.view = view;
     }
-
-
 }

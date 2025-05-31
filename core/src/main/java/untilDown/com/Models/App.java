@@ -1,7 +1,12 @@
 package untilDown.com.Models;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Json;
+
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class App {
@@ -11,11 +16,11 @@ public class App {
     public static int fieldWidth = 600;
 
     private ArrayList<User> users = new ArrayList<>();
-    {
-        addUser(new User("ali", "ali", "ali", true));
-    }
     private User loggedInUser = null;
 
+    private App() {
+        loadUsers();
+    }
 
     public static App getApp() {
         if (app == null) {
@@ -57,5 +62,24 @@ public class App {
 
     public void setLoggedInUser(User loggedInUser) {
         this.loggedInUser = loggedInUser;
+    }
+
+    public void saveUsers() {
+        Json json = new Json();
+        String jsonString = json.toJson(users);
+        FileHandle file = Gdx.files.local("data/users.json");
+        file.writeString(jsonString, false);
+    }
+
+    public void loadUsers() {
+        FileHandle file = Gdx.files.local("data/users.json");
+
+        if (file.exists()) {
+            Json json = new Json();
+            Array<User> loadedUsers = json.fromJson(Array.class, User.class, file);
+            for (User user : loadedUsers) {
+                users.add(user);
+            }
+        }
     }
 }
