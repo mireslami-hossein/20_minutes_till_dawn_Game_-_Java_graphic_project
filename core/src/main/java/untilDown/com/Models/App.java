@@ -1,15 +1,13 @@
 package untilDown.com.Models;
 
 import com.badlogic.gdx.Gdx;
-import untilDown.com.Controllers.SignupMenuController;
-
 import java.util.ArrayList;
 
 public class App {
     private static App app;
+
     private final String gameTitle = "20 Minutes Till Dawn";
-
-
+    public static int fieldWidth = 600;
 
     private ArrayList<User> users = new ArrayList<>();
 
@@ -30,5 +28,14 @@ public class App {
 
     public float getHeight() {
         return Gdx.graphics.getHeight();
+    }
+
+    public User getUserByUsername(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return user;
+            }
+        }
+        return null;
     }
 }

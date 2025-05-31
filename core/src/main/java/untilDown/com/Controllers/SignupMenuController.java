@@ -15,14 +15,19 @@ public class SignupMenuController {
     public String handleSignup(String username, String password, String confirmPassword) {
         Result result;
 
-        if (!(result = passwordCheck(password, confirmPassword)).success) {
+        if (!(result = checkPassword(password, confirmPassword)).success) {
             return result.message;
         }
 
         return "";
     }
 
-    public Result passwordCheck(String password, String confirmPassword) {
+
+    public Result checkUsername(String username) {
+        return new Result(true, "");
+    }
+
+    public Result checkPassword(String password, String confirmPassword) {
         if (!password.equals(confirmPassword)) {
             return new Result(false, "Password and confirm password do not match");
         }

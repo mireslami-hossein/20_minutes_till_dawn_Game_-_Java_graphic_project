@@ -14,6 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import untilDown.com.Controllers.SignupMenuController;
 import untilDown.com.Main;
 import untilDown.com.Models.App;
+import untilDown.com.Models.GameAssetManager;
+
+import java.awt.event.TextListener;
 
 
 public class SignupMenuView implements Screen {
@@ -23,14 +26,18 @@ public class SignupMenuView implements Screen {
     private Label gameTitleLabel;
     private Label signupMenuTitle;
     private TextField username;
+
     private TextField password;
+    private TextButton showPassword;
     private TextField confirmPassword;
-    private TextButton signupButton;
+    private TextButton showConfirmPassword;
 
     private Label securityQuestionLabel;
     private TextField answerField;
 
     private Label alert;
+
+    private TextButton signupButton;
 
     private Table table;
 
@@ -44,13 +51,17 @@ public class SignupMenuView implements Screen {
 
         username = new TextField("", skin);
         password = new TextField("", skin);
+
+        showPassword = new TextButton("Show", skin);
+        showConfirmPassword = new TextButton("Show", skin);
+
         confirmPassword = new TextField("", skin);
-        signupButton = new TextButton("Sign Up", skin);
 
         securityQuestionLabel = new Label("What was your first school name?", skin);
         answerField = new TextField("", skin);
 
         alert = new Label("", skin);
+        signupButton = new TextButton("Sign Up", skin);
     }
 
     @Override
@@ -63,37 +74,43 @@ public class SignupMenuView implements Screen {
 
         gameTitleLabel.setFontScale(4f);
         gameTitleLabel.setColor(Color.RED);
-        table.add(gameTitleLabel).expandX().center();
+        table.add(gameTitleLabel);
 
         table.row().padTop(75);
         signupMenuTitle.setFontScale(2f);
-        table.add(signupMenuTitle).expandX().center();
+        table.add(signupMenuTitle);
 
         table.row().padTop(50);
         username.setMessageText("Username");
-        table.add(username).width(600).padBottom(20);
+        table.add(username).width(App.fieldWidth).padBottom(20);
 
         table.row();
         password.setMessageText("Password");
         password.setPasswordMode(true);
         password.setPasswordCharacter('*');
-        table.add(password).width(600).padBottom(20);
+        table.add(password).width(App.fieldWidth).padBottom(20);
+        table.add(showPassword).width(200).padLeft(5);
 
         table.row();
         confirmPassword.setMessageText("Confirm Password");
         confirmPassword.setPasswordMode(true);
         confirmPassword.setPasswordCharacter('*');
-        table.add(confirmPassword).width(600).padBottom(30);
+        table.add(confirmPassword).width(App.fieldWidth).padBottom(30);
+        table.add(showConfirmPassword).width(200).padLeft(5);
+
+        // listeners for show password
+        addShowPassListener(showPassword, password);
+        addShowPassListener(showConfirmPassword, confirmPassword);
 
         table.row();
         table.add(securityQuestionLabel);
 
         table.row();
         answerField.setMessageText("Answer of Security question");
-        table.add(answerField).width(600).padBottom(50);
+        table.add(answerField).width(App.fieldWidth).padBottom(50);
 
         table.row();
-        table.add(signupButton).width(600);
+        table.add(signupButton).width(App.fieldWidth);
 
         table.row().padTop(50);
         alert.setColor(Color.RED);
@@ -108,6 +125,17 @@ public class SignupMenuView implements Screen {
         });
 
         stage.addActor(table);
+    }
+
+    public void addShowPassListener(TextButton button, TextField field) {
+        button.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                boolean isPassMode = field.isPasswordMode();
+                field.setPasswordMode(!isPassMode);
+                button.setText(field.isPasswordMode() ? "Show" : "Hide");
+            }
+        });
     }
 
     @Override
