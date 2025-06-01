@@ -1,13 +1,17 @@
 package untilDown.com.Views;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import untilDown.com.Controllers.MainMenuController;
@@ -45,7 +49,8 @@ public class MainMenuView implements Screen {
 
     // windows
     private Window settingsWindow;
-     private  Window controlsWindow;
+    private  Window controlsWindow;
+    private boolean waitingForKey = false;
 
     public MainMenuView(MainMenuController controller, Skin skin) {
         this.controller = controller;
@@ -278,6 +283,8 @@ public class MainMenuView implements Screen {
             Label keyWord = new Label(key, GameAssetManager.getManager().getSkin());
             String keyName = GameKeysManager.getManager().getKeyName(gameKeys.get(key));
             TextButton button = new TextButton(keyName, GameAssetManager.getManager().getSkin());
+            addChangeKeyListener(button, gameKeys.get(key));
+
             contentTable.add(keyWord);
             contentTable.add(button).padRight(15);
         }
@@ -301,6 +308,39 @@ public class MainMenuView implements Screen {
 
     public void showControlsWindow() {
         stage.addActor(controlsWindow);
+    }
+
+    public void addChangeKeyListener(TextButton button, int firstKey) {
+        button.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                if (waitingForKey) return;
+
+                waitingForKey = true;
+                button.setText("Press a key...");
+                Gdx.input.setInputProcessor(new InputAdapter() {
+                    @Override
+                    public boolean keyDown(int keyCode) {
+                        GameKeysManager.getManager().setKey(firstKey, keyCode);
+                        button.setText(GameKeysManager.getManager().getKeyName(keyCode));
+                        Gdx.input.setInputProcessor(stage);
+                        waitingForKey = false;
+                        return true;
+                    }
+
+                    @Override
+                    public boolean touchDown(int screenX, int screenY, int pointer, int buttonCode) {
+                        // Mouse buttons: 0 = left, 1 = right, 2 = middle
+                        int mappedCode = -100 - buttonCode;  // left = -100
+                        GameKeysManager.getManager().setKey(firstKey, mappedCode);
+                        button.setText(GameKeysManager.getManager().getKeyName(mappedCode));
+                        Gdx.input.setInputProcessor(stage);
+                        waitingForKey = false;
+                        return true;
+                    }
+                });
+            }
+        });
     }
 
 

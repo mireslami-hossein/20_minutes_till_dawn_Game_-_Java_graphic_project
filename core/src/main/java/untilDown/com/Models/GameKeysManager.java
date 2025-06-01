@@ -7,17 +7,18 @@ import java.util.HashMap;
 public class GameKeysManager {
     private static GameKeysManager instance;
 
-    private int goUp = Input.Keys.W;
-    private int goDown = Input.Keys.S;
-    private int goLeft = Input.Keys.A;
-    private int goRight = Input.Keys.D;
+    private HashMap<String, Integer> keys = new HashMap<>();
 
-    private int reload = Input.Keys.R;
+    private GameKeysManager() {
+        keys.put("goUp", Input.Keys.W);
+        keys.put("goDown", Input.Keys.S);
+        keys.put("goLeft", Input.Keys.A);
+        keys.put("goRight", Input.Keys.D);
+        keys.put("reload", Input.Keys.R);
+        keys.put("autoAim", Input.Keys.SPACE);
 
-    private int autoAim = Input.Keys.SPACE;
-    private int shoot = Input.Buttons.LEFT;
-
-    private GameKeysManager() {}
+        keys.put("shoot", -100 - Input.Buttons.LEFT); // Mouse buttons are -100 : Left, -101: Right, -102: Middle
+    }
 
     public static GameKeysManager getManager() {
         if (instance == null) {
@@ -27,36 +28,36 @@ public class GameKeysManager {
     }
 
     public HashMap<String, Integer> getGameKeys() {
-        HashMap<String, Integer> gameKeys = new HashMap<>();
-
-        gameKeys.put("goUp", goUp);
-        gameKeys.put("goDown", goDown);
-        gameKeys.put("goLeft", goLeft);
-        gameKeys.put("goRight", goRight);
-
-        gameKeys.put("reload", reload);
-        gameKeys.put("autoAim", autoAim);
-        gameKeys.put("shoot" , shoot);
-
-        return gameKeys;
+        return keys;
     }
 
     public String getKeyName(int key) {
-        String keyName = Input.Keys.toString(key);
-        if (keyName.equals("Unknown")) {
+        String keyName;
+        if (key <= -100) {
             switch (key) {
-                case 0:
+                case -100:
                     keyName = "Left Mouse";
                     break;
-                case 1:
+                case -101:
                     keyName = "Right Mouse";
                     break;
-                case 2:
+                case -102:
                     keyName = "Middle Mouse";
                     break;
+                default:
+                    keyName = "UNKNOWN";
+            }
+        } else {
+            keyName = Input.Keys.toString(key);
+        }
+        return keyName;
+    }
+
+    public void setKey(int keyOld, int keyNew) {
+        for (String keyType : keys.keySet()) {
+            if (keys.get(keyType) == keyOld) {
+                keys.put (keyType, keyNew);
             }
         }
-
-        return keyName;
     }
 }
