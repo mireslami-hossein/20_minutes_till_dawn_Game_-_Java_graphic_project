@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class App {
     private static App app;
@@ -83,6 +84,22 @@ public class App {
         }
     }
 
+    public void deleteUser(User user) {
+        users.remove(user);
+    }
+
+    public List<User> getAllUsers() {
+        return users;
+    }
+
+    public enum SortMode {
+        Username, Score, Kills, TimeLived
+    }
+
+    public void getUsersSorted(SortMode sortMode) {
+
+    }
+
     // auto reload
     public boolean isAutoReloadEnabled() {
         return autoReloadEnabled;
@@ -90,9 +107,5 @@ public class App {
 
     public void setAutoReloadEnabled(boolean autoReloadEnabled) {
         this.autoReloadEnabled = autoReloadEnabled;
-    }
-
-    public void deleteUser(User user) {
-        users.remove(user);
     }
 }

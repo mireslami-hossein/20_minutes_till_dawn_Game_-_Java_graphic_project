@@ -20,6 +20,12 @@ public class Player {
     private boolean isPlayerIdle = true;
     private boolean isPlayerRunning = false;
 
+    // current Game data
+    private int currentGameKills;
+    private int currentGameScore;
+    private int currentGameTimeLived;
+
+
     public Player() {
         playerSprite.setPosition((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight() / 2);
         playerSprite.setSize(playerSprite.getWidth() * 3, playerSprite.getHeight() * 3);

@@ -52,6 +52,7 @@ public class MainMenuView implements Screen {
     private  Window controlsWindow;
     private boolean waitingForKey = false;
 
+
     public MainMenuView(MainMenuController controller, Skin skin) {
         this.controller = controller;
         controller.setView(this);
@@ -160,7 +161,7 @@ public class MainMenuView implements Screen {
         scoreboardButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                Main.getMain().navigateToScoreboard();
             }
         });
         hintMenuButton.addListener(new ChangeListener() {

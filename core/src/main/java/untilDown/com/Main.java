@@ -30,6 +30,7 @@ public class Main extends Game {
 
     private MainMenuView mainMenuView;
     private ProfileMenuView profileMenuView;
+    private ScoreboardView scoreboardView;
     private PreGameMenuView preGameMenuView;
     private GameView gameView;
 
@@ -90,5 +91,10 @@ public class Main extends Game {
     public void navigateToProfileMenu() {
         profileMenuView = new ProfileMenuView(mainMenuView.getController(), GameAssetManager.getManager().getSkin());
         setScreen(profileMenuView);
+    }
+
+    public void navigateToScoreboard() {
+        scoreboardView = new ScoreboardView(GameAssetManager.getManager().getSkin());
+        setScreen(scoreboardView);
     }
 }

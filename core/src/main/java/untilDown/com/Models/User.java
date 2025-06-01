@@ -3,8 +3,8 @@ package untilDown.com.Models;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import untilDown.com.Models.avatar.Avatar;
-import untilDown.com.Models.avatar.AvatarCustom;
 import untilDown.com.Models.avatar.AvatarImage;
+
 
 public class User {
     private String username;
@@ -14,7 +14,15 @@ public class User {
     private UserType userType;
 
     private AvatarImage avatar;
-    private int score = 0;
+
+    // data
+    private int totalScore = 0;
+    private int totalKills = 0;
+    private int totalTimeLived = 0;
+
+
+    private transient Player player = new Player();
+
 
     public User(){};
 
@@ -63,8 +71,17 @@ public class User {
         return Gdx.files.local(avatar.getAddress());
     }
 
+    // Player data
     public int getScore() {
-        return score;
+        return totalScore;
+    }
+
+    public int getKills() {
+        return totalKills;
+    }
+
+    public int getTimeLived() {
+        return totalTimeLived;
     }
 }
 
