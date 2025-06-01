@@ -97,7 +97,6 @@ public class MainMenuView implements Screen {
         Table userDetailsTable = new Table();
         userDetailsTable.add(avatarImage).size(100, 100).padRight(20);
 
-//        userDetailsTable.padLeft(100);
         userNameLabel.setFontScale(2f);
         userDetailsTable.add(userNameLabel).left();
         userScores.setFontScale(2f);
@@ -150,7 +149,7 @@ public class MainMenuView implements Screen {
         profileButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                Main.getMain().navigateToProfileMenu();
             }
         });
         pregameMenuButton.addListener(new ChangeListener() {
@@ -379,5 +378,9 @@ public class MainMenuView implements Screen {
         if (stage != null) {
             stage.dispose();
         }
+    }
+
+    public MainMenuController getController() {
+        return controller;
     }
 }

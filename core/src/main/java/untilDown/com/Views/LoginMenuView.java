@@ -90,7 +90,7 @@ public class LoginMenuView implements Screen, InputProcessor {
         table.add(showPassword).width(200).padLeft(10);
 
         // listeners for show password
-        addShowPassListener(showPassword, password);
+        Main.getMain().getSignupMenuView().addShowPassListener(showPassword, password);
 
         table.row().padTop(70);
         table.add(loginButton).width(App.fieldWidth);
