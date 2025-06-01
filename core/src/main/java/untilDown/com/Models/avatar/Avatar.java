@@ -1,6 +1,6 @@
-package untilDown.com.Models;
+package untilDown.com.Models.avatar;
 
-public enum Avatar {
+public enum Avatar implements AvatarImage {
     Man_1, Man_2, Man_3,
     Man_4, Man_5, Man_6,;
 
@@ -8,7 +8,8 @@ public enum Avatar {
         return Avatar.values()[(int) (Math.random()*Avatar.values().length)];
     }
 
+    @Override
     public String getAddress() {
-        return ("avatar/" + (ordinal() + 1) + ".png");
+        return ("data/avatars/" + (ordinal() + 1) + ".png");
     }
 }
