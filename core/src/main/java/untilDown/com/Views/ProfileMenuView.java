@@ -72,6 +72,7 @@ public class ProfileMenuView implements Screen {
         passwordLabel = new Label("Password: ", skin);
         changePasswordField = new TextField(loggedInUser.getPassword(), skin);
         changePasswordField.setPasswordMode(true);
+        changePasswordField.setPasswordCharacter('*');
         showPass = new TextButton("Show", skin);
 
         saveDataButton = new TextButton("Save", skin);
@@ -123,7 +124,6 @@ public class ProfileMenuView implements Screen {
 
         formTable.add(changePasswordField).width((float)App.fieldWidth);
         formTable.add(showPass).width((float)App.fieldWidth/2).left().padLeft(20);
-        Main.getMain().getSignupMenuView().addShowPassListener(showPass, changePasswordField);
 
         handleForGuest();
 
@@ -142,6 +142,7 @@ public class ProfileMenuView implements Screen {
 
         stage.addActor(table);
     }
+
 
     private void setAvatarSelectBox() {
         Array<String> allAvatars = Avatar.getAllAvatarNames();
@@ -178,6 +179,15 @@ public class ProfileMenuView implements Screen {
     }
 
     private void addButtonsListener() {
+        showPass.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                boolean isPassMode = changePasswordField.isPasswordMode();
+                changePasswordField.setPasswordMode(!isPassMode);
+                showPass.setText(changePasswordField.isPasswordMode() ? "Show" : "Hide");
+            }
+        });
+
         changeAvatarButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
