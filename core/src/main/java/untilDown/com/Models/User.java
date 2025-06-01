@@ -55,6 +55,10 @@ public class User {
         this.avatar = avatar;
     }
 
+    public AvatarImage getAvatar() {
+        return avatar;
+    }
+
     public FileHandle getAvatarAddress() {
         return Gdx.files.local(avatar.getAddress());
     }

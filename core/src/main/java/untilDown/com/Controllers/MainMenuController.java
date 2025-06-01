@@ -1,14 +1,18 @@
 package untilDown.com.Controllers;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import untilDown.com.Main;
 import untilDown.com.Models.App;
 import untilDown.com.Models.Result;
 import untilDown.com.Models.User;
+import untilDown.com.Models.avatar.Avatar;
 import untilDown.com.Models.avatar.AvatarCustom;
 import untilDown.com.Views.MainMenuView;
 import untilDown.com.Views.ProfileMenuView;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.regex.Pattern;
 
@@ -95,8 +99,11 @@ public class MainMenuController {
         fileDialog.setMode(FileDialog.LOAD);
         fileDialog.setVisible(true);
 
-        String filePath = fileDialog.getDirectory() + fileDialog.getFile();
+        if (fileDialog.getFile() == null) {
+            return;
+        }
 
+        String filePath = fileDialog.getDirectory() + fileDialog.getFile();
 
         FileHandle target = Gdx.files.local("data/avatars/user_avatar_" + (int)(Math.random()*100000)+ ".png");
         FileHandle source = new FileHandle(filePath);

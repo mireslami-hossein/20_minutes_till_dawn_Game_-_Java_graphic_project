@@ -4,16 +4,22 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import untilDown.com.Controllers.MainMenuController;
 import untilDown.com.Main;
 import untilDown.com.Models.App;
+import untilDown.com.Models.GameAssetManager;
 import untilDown.com.Models.User;
+import untilDown.com.Models.avatar.Avatar;
+import untilDown.com.Models.avatar.AvatarImage;
 
 public class ProfileMenuView implements Screen {
 
@@ -25,6 +31,7 @@ public class ProfileMenuView implements Screen {
     private Texture avatarTexture;
     private Image avatarImage;
     private TextButton changeAvatarButton;
+    private SelectBox<String> avatarSelectBox;
     private Label userScores;
 
     private Label userNameLabel;
@@ -53,7 +60,9 @@ public class ProfileMenuView implements Screen {
         User loggedInUser = App.getApp().getLoggedInUser();
         avatarTexture = new Texture(loggedInUser.getAvatarAddress());
         avatarImage = new Image(avatarTexture);
-        changeAvatarButton = new TextButton("Change", skin);
+        avatarSelectBox = new SelectBox<>(skin);
+
+        changeAvatarButton = new TextButton("Upload", skin);
 
         userScores = new Label("Scores :  " + loggedInUser.getScore(), skin);
 
@@ -91,11 +100,13 @@ public class ProfileMenuView implements Screen {
         table.row().padTop(50);
         Table userDetailsTable = new Table();
         userDetailsTable.add(avatarImage).size(100, 100).padRight(20);
+        setAvatarSelectBox();
+        userDetailsTable.add(avatarSelectBox).width(App.fieldWidth * 0.75f).padRight(20);
         userDetailsTable.add(changeAvatarButton).width((float)App.fieldWidth/2);
 
         userScores.setFontScale(2f);
         userScores.setColor(Color.CYAN);
-        userDetailsTable.add(userScores).left().padLeft(350);
+        userDetailsTable.add(userScores).left().padLeft(250);
 
         table.add(userDetailsTable).expandX().fillX();
 
@@ -132,6 +143,29 @@ public class ProfileMenuView implements Screen {
         stage.addActor(table);
     }
 
+    private void setAvatarSelectBox() {
+        Array<String> allAvatars = Avatar.getAllAvatarNames();
+        avatarSelectBox.setItems(allAvatars);
+
+        User user = App.getApp().getLoggedInUser();
+        AvatarImage userAvatar = user.getAvatar();
+        if (userAvatar instanceof Avatar) {
+            avatarSelectBox.setSelected(((Avatar) userAvatar).name());
+        }
+
+        avatarSelectBox.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                String selected = avatarSelectBox.getSelected();
+                selectUserAvatar(selected);
+                avatarTexture.dispose();
+
+                avatarTexture = new Texture(user.getAvatarAddress());
+                avatarImage.setDrawable(new TextureRegionDrawable(new TextureRegion(avatarTexture)));
+            }
+        });
+    }
+
     private void handleForGuest() {
         User loggedInUser = App.getApp().getLoggedInUser();
 
@@ -148,6 +182,9 @@ public class ProfileMenuView implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 controller.handleChangeAvatar();
+                avatarTexture.dispose();
+                avatarTexture = new Texture(App.getApp().getLoggedInUser().getAvatarAddress());
+                avatarImage.setDrawable(new TextureRegionDrawable(new TextureRegion(avatarTexture)));
             }
         });
 
@@ -170,6 +207,10 @@ public class ProfileMenuView implements Screen {
         });
     }
 
+    public void selectUserAvatar(String selectedAvatar) {
+        User user = App.getApp().getLoggedInUser();
+        user.setAvatar(Avatar.getAvatarByName(selectedAvatar));
+    }
 
 
     @Override
