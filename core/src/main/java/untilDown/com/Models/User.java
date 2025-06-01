@@ -1,5 +1,11 @@
 package untilDown.com.Models;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
+import untilDown.com.Models.avatar.Avatar;
+import untilDown.com.Models.avatar.AvatarCustom;
+import untilDown.com.Models.avatar.AvatarImage;
+
 public class User {
     private String username;
     private String password;
@@ -7,7 +13,7 @@ public class User {
     private String answer;
     private UserType userType;
 
-    private Avatar avatar;
+    private AvatarImage avatar;
     private int score = 0;
 
     public User(){};
@@ -45,8 +51,8 @@ public class User {
         return userType == UserType.Guest;
     }
 
-    public String getAvatarAddress() {
-        return avatar.getAddress();
+    public FileHandle getAvatarAddress() {
+        return Gdx.files.local(avatar.getAddress());
     }
 
     public int getScore() {

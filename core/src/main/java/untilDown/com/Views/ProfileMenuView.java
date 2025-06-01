@@ -51,8 +51,7 @@ public class ProfileMenuView implements Screen {
         gameTitleLabel = new Label(App.getApp().getGameTitle(), skin);
 
         User loggedInUser = App.getApp().getLoggedInUser();
-        String avatarPath = loggedInUser.getAvatarAddress();
-        avatarTexture = new Texture(avatarPath);
+        avatarTexture = new Texture(loggedInUser.getAvatarAddress());
         avatarImage = new Image(avatarTexture);
         changeAvatarButton = new TextButton("Change", skin);
 
@@ -155,7 +154,11 @@ public class ProfileMenuView implements Screen {
         deleteAccountButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                controller.deleteAccount();
+                if (deleteAccountButton.getText().toString().equals("Confirm ...")) {
+                    controller.deleteAccount();
+                } else {
+                    deleteAccountButton.setText("Confirm ...");
+                }
             }
         });
     }

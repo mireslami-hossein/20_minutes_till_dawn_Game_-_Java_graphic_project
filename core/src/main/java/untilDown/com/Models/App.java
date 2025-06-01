@@ -74,7 +74,7 @@ public class App {
     public void loadUsers() {
         FileHandle file = Gdx.files.local("data/users.json");
 
-        if (file.exists()) {
+        if (file.exists() && !file.readString().isEmpty()) {
             Json json = new Json();
             Array<User> loadedUsers = json.fromJson(Array.class, User.class, file);
             for (User user : loadedUsers) {
@@ -90,5 +90,9 @@ public class App {
 
     public void setAutoReloadEnabled(boolean autoReloadEnabled) {
         this.autoReloadEnabled = autoReloadEnabled;
+    }
+
+    public void deleteUser(User user) {
+        users.remove(user);
     }
 }

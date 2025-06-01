@@ -73,6 +73,14 @@ public class MainMenuController {
     }
 
     public void deleteAccount() {
+        User user = App.getApp().getLoggedInUser();
+        if (user.isGuest()) {
+            App.getApp().setLoggedInUser(null);
+        } else {
+            App.getApp().deleteUser(user);
+            App.getApp().setLoggedInUser(null);
+        }
 
+        Main.getMain().navigateToLoginMenu();
     }
 }

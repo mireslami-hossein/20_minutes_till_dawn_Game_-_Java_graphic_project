@@ -61,8 +61,7 @@ public class MainMenuView implements Screen {
 
         User loggedInUser = App.getApp().getLoggedInUser();
 
-        String avatarPath = loggedInUser.getAvatarAddress();
-        avatarTexture = new Texture(avatarPath);
+        avatarTexture = new Texture(loggedInUser.getAvatarAddress());
         avatarImage = new Image(avatarTexture);
         userNameLabel = new Label(loggedInUser.getUsername(), skin);
         userScores = new Label("Scores :  " + loggedInUser.getScore(), skin);
