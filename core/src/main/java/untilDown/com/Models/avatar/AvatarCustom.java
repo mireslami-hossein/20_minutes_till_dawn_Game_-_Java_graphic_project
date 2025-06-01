@@ -1,14 +1,14 @@
 package untilDown.com.Models.avatar;
 
 public class AvatarCustom implements AvatarImage {
-    String name;
+    String path;
 
-    public AvatarCustom(String name) {
-        this.name = name;
+    public AvatarCustom(String path) {
+        this.path = path;
     }
 
     @Override
     public String getAddress() {
-        return "data/avatars/" + name;
+        return path;
     }
 }

@@ -51,6 +51,10 @@ public class User {
         return userType == UserType.Guest;
     }
 
+    public void setAvatar(AvatarImage avatar) {
+        this.avatar = avatar;
+    }
+
     public FileHandle getAvatarAddress() {
         return Gdx.files.local(avatar.getAddress());
     }

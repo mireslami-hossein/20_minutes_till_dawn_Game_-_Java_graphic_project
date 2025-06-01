@@ -1,11 +1,15 @@
 package untilDown.com.Controllers;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import untilDown.com.Main;
 import untilDown.com.Models.App;
 import untilDown.com.Models.Result;
 import untilDown.com.Models.User;
+import untilDown.com.Models.avatar.AvatarCustom;
 import untilDown.com.Views.MainMenuView;
 import untilDown.com.Views.ProfileMenuView;
 
+import java.awt.*;
 import java.util.regex.Pattern;
 
 
@@ -82,5 +86,22 @@ public class MainMenuController {
         }
 
         Main.getMain().navigateToLoginMenu();
+    }
+
+    public void handleChangeAvatar() {
+        User user = App.getApp().getLoggedInUser();
+
+        FileDialog fileDialog = new FileDialog((Frame) null, "Select Image");
+        fileDialog.setMode(FileDialog.LOAD);
+        fileDialog.setVisible(true);
+
+        String filePath = fileDialog.getDirectory() + fileDialog.getFile();
+
+
+        FileHandle target = Gdx.files.local("data/avatars/user_avatar_" + (int)(Math.random()*100000)+ ".png");
+        FileHandle source = new FileHandle(filePath);
+        source.copyTo(target);
+
+        user.setAvatar(new AvatarCustom(target.path()));
     }
 }

@@ -144,6 +144,13 @@ public class ProfileMenuView implements Screen {
     }
 
     private void addButtonsListener() {
+        changeAvatarButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                controller.handleChangeAvatar();
+            }
+        });
+
         saveDataButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
