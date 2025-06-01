@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import untilDown.com.Controllers.SignupMenuController;
 import untilDown.com.Main;
 import untilDown.com.Models.App;
@@ -69,7 +70,7 @@ public class SignupMenuView implements Screen {
 
     @Override
     public void show() {
-        stage = new Stage();
+        stage = new Stage(new FitViewport(1200, 1280));
         table = new Table();
         stage.clear();
         Gdx.input.setInputProcessor(stage);
@@ -81,45 +82,46 @@ public class SignupMenuView implements Screen {
 
         table.center();
 
+        rootTable.row().padTop(45);
         gameTitleLabel.setFontScale(4f);
         gameTitleLabel.setColor(Color.RED);
         rootTable.add(gameTitleLabel).expandX();
 
-        table.row().padTop(75);
+        table.row().padTop(30);
         signupMenuTitle.setFontScale(2f);
         table.add(signupMenuTitle).center();
 
-        rootTable.row().padTop(75);
-        table.row().padTop(50);
+        rootTable.row().padTop(45);
+        table.row();
         username.setMessageText("Username");
-        table.add(username).width(App.fieldWidth).padBottom(20);
+        table.add(username).width(App.fieldWidth).padBottom(15);
 
         table.row();
         password.setMessageText("Password");
         password.setPasswordMode(true);
         password.setPasswordCharacter('*');
-        table.add(password).width(App.fieldWidth).padBottom(20);
-        table.add(showPassword).width(200).padLeft(10);
+        table.add(password).width(App.fieldWidth).padBottom(15);
+        table.add(showPassword).width(200).height(100).padLeft(10);
 
-        table.row();
+        table.row().padBottom(15);
         confirmPassword.setMessageText("Confirm Password");
         confirmPassword.setPasswordMode(true);
         confirmPassword.setPasswordCharacter('*');
-        table.add(confirmPassword).width(App.fieldWidth).padBottom(30);
-        table.add(showConfirmPassword).width(200).padLeft(10);
+        table.add(confirmPassword).width(App.fieldWidth);
+        table.add(showConfirmPassword).width(200).height(100).padLeft(10);
 
         // listeners for show password
         addShowPassListener(showPassword, password);
         addShowPassListener(showConfirmPassword, confirmPassword);
 
-        table.row();
+        table.row().padTop(15);
         table.add(securityQuestionLabel);
 
-        table.row();
+        table.row().padTop(15);
         answerField.setMessageText("Answer of Security question");
         table.add(answerField).width(App.fieldWidth);
 
-        table.row().padTop(70);
+        table.row().padTop(35);
         table.add(signupButton).width(App.fieldWidth);
 
         table.row().padTop(20);
@@ -129,7 +131,7 @@ public class SignupMenuView implements Screen {
         table.add(loginAsGuestButton).width(App.fieldWidth);
 
 
-        table.row().padTop(50);
+        table.row().padTop(20);
         alert.setColor(Color.RED);
 
         table.add(alert);

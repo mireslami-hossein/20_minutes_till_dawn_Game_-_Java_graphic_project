@@ -11,7 +11,7 @@ public class App {
     private static App app;
 
     private final String gameTitle = "20 Minutes Till Dawn";
-    public static int fieldWidth = 600;
+    public static int fieldWidth = 450;
 
     private ArrayList<User> users = new ArrayList<>();
     private User loggedInUser = null;

@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import untilDown.com.Controllers.MainMenuController;
 import untilDown.com.Main;
 import untilDown.com.Models.App;
@@ -79,7 +80,7 @@ public class MainMenuView implements Screen {
 
     @Override
     public void show() {
-        stage = new Stage();
+        stage = new Stage(new FitViewport(1200, 1280));
         table = new Table();
 
         Gdx.input.setInputProcessor(stage);
@@ -91,38 +92,38 @@ public class MainMenuView implements Screen {
         Table userDetailsTable = new Table();
         userDetailsTable.add(avatarImage).size(100, 100).padRight(20);
 
-        userDetailsTable.padLeft(100);
+//        userDetailsTable.padLeft(100);
         userNameLabel.setFontScale(2f);
         userDetailsTable.add(userNameLabel).left();
         userScores.setFontScale(2f);
         userScores.setColor(Color.CYAN);
-        userDetailsTable.add(userScores).left().padLeft(600);
+        userDetailsTable.add(userScores).left().padLeft(App.fieldWidth);
 
         table.add(userDetailsTable).expandX().fillX();
-        table.row().padTop(75);
+        table.row().padTop(50);
         gameTitleLabel.setFontScale(4f);
         gameTitleLabel.setColor(Color.RED);
         table.add(gameTitleLabel).expandX();
 
-        table.row().padTop(75);
+        table.row().padTop(50);
         table.add(settingsButton).width(App.fieldWidth);
 
-        table.row().padTop(30);
+        table.row().padTop(15);
         table.add(profileButton).width(App.fieldWidth);
 
-        table.row().padTop(30);
+        table.row().padTop(15);
         table.add(pregameMenuButton).width(App.fieldWidth);
 
-        table.row().padTop(30);
+        table.row().padTop(15);
         table.add(scoreboardButton).width(App.fieldWidth);
 
-        table.row().padTop(30);
+        table.row().padTop(15);
         table.add(hintMenuButton).width(App.fieldWidth);
 
-        table.row().padTop(30);
+        table.row().padTop(15);
         table.add(savedGameButton).width(App.fieldWidth);
 
-        table.row().padTop(50);
+        table.row().padTop(30);
         table.add(logoutButton).width(450);
 
         stage.addActor(table); // To add table to stage of view

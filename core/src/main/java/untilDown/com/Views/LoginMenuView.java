@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import untilDown.com.Controllers.LoginMenuController;
 import untilDown.com.Main;
 import untilDown.com.Models.App;
@@ -56,7 +57,7 @@ public class LoginMenuView implements Screen, InputProcessor {
 
     @Override
     public void show() {
-        stage = new Stage();
+        stage = new Stage(new FitViewport(1200, 1280));
         table = new Table();
         stage.clear(); // To load the stage correct after returning to this screen
         Gdx.input.setInputProcessor(stage);
