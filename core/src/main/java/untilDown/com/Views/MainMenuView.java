@@ -164,7 +164,7 @@ public class MainMenuView implements Screen {
         hintMenuButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                //TODO
+                Main.getMain().navigateToHintMenu();
             }
         });
 

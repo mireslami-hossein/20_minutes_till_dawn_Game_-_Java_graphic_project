@@ -92,14 +92,6 @@ public class App {
         return users;
     }
 
-    public enum SortMode {
-        Username, Score, Kills, TimeLived
-    }
-
-    public void getUsersSorted(SortMode sortMode) {
-
-    }
-
     // auto reload
     public boolean isAutoReloadEnabled() {
         return autoReloadEnabled;

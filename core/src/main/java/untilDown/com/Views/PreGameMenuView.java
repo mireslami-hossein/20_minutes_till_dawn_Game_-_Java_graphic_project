@@ -10,19 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import untilDown.com.Controllers.PreGameMenuController;
-import untilDown.com.Main;
 import untilDown.com.Models.App;
 import untilDown.com.Models.GameAssetManager;
 import untilDown.com.Models.Setting;
 import untilDown.com.Models.gun.GunType;
 import untilDown.com.Models.hero.HeroType;
-
-import javax.swing.event.ChangeEvent;
 
 public class PreGameMenuView implements Screen {
     private final PreGameMenuController controller;

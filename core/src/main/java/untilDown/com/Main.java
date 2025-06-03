@@ -29,6 +29,7 @@ public class Main extends Game {
     private MainMenuView mainMenuView;
     private ProfileMenuView profileMenuView;
     private ScoreboardView scoreboardView;
+    private HintMenuView hintMenuView;
     private PreGameMenuView preGameMenuView;
     private GameView gameView;
 
@@ -60,10 +61,12 @@ public class Main extends Game {
     }
 
     // get views
-
-
     public SignupMenuView getSignupMenuView() {
         return signupMenuView;
+    }
+
+    public MainMenuView getMainMenuView() {
+        return mainMenuView;
     }
 
     // change screens
@@ -89,6 +92,11 @@ public class Main extends Game {
     public void navigateToProfileMenu() {
         profileMenuView = new ProfileMenuView(mainMenuView.getController(), GameAssetManager.getManager().getSkin());
         setScreen(profileMenuView);
+    }
+
+    public void navigateToHintMenu() {
+        hintMenuView = new HintMenuView(new PreGameMenuController(), GameAssetManager.getManager().getSkin());
+        setScreen(hintMenuView);
     }
 
     public void navigateToScoreboard() {
