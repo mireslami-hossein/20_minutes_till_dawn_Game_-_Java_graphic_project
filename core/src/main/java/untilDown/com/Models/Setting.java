@@ -4,7 +4,9 @@ import untilDown.com.Models.gun.GunType;
 import untilDown.com.Models.hero.HeroType;
 
 public class Setting {
-    private static HeroType heroNameSelected = HeroType.Dasher;
-    private static GunType gunNameSelcected = GunType.Revolver;
-    private static int durationOfGame = 20;
+    public static HeroType heroSelected = HeroType.Dasher;
+    public static GunType gunSelcected = GunType.Revolver;
+    public static int durationOfGame = 20;
+
+    public static boolean autoReloadEnabled = true;
 }

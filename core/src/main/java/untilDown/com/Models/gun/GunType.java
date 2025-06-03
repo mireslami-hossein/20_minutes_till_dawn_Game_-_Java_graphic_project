@@ -1,9 +1,10 @@
 package untilDown.com.Models.gun;
 
+
 public enum GunType {
     Revolver(20,1,1,6),
     Shotgun(10,4,1,2),
-    SMGs_dual(8,1,2,24);
+    SMG(8,1,2,24);
 
     private int damage;
     private int projectileNumberPerShot;
@@ -16,6 +17,14 @@ public enum GunType {
         this.timeReload = timeReload;
         this.maxAmmo = maxAmmo;
     }
+
+    public String getStillPath() {
+        return "guns/" + this.name() + "/" + this.name() + "Still.png";
+    }
+
+//    public Animation getReloadAnimationPath() {
+//        return "guns/" + this.name() + "Still.png";
+//    }
 
     public int getDamage() {
         return damage;

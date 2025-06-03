@@ -16,11 +16,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import untilDown.com.Controllers.MainMenuController;
 import untilDown.com.Main;
-import untilDown.com.Models.App;
-import untilDown.com.Models.GameAssetManager;
+import untilDown.com.Models.*;
 import untilDown.com.Models.GameAssetManager.MusicOfGame;
-import untilDown.com.Models.GameKeysManager;
-import untilDown.com.Models.User;
 
 import java.util.HashMap;
 
@@ -155,7 +152,7 @@ public class MainMenuView implements Screen {
         pregameMenuButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                Main.getMain().navigateToPregameMenu();
             }
         });
         scoreboardButton.addListener(new ChangeListener() {
@@ -167,7 +164,7 @@ public class MainMenuView implements Screen {
         hintMenuButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-
+                //TODO
             }
         });
 
@@ -239,7 +236,7 @@ public class MainMenuView implements Screen {
 
         settingsWindow.row().padTop(30);
         CheckBox autoReload = new CheckBox("Auto-Reload", skin);
-        autoReload.setChecked(App.getApp().isAutoReloadEnabled());
+        autoReload.setChecked(Setting.autoReloadEnabled);
         settingsWindow.add(autoReload).width(600);
 
         settingsWindow.row().padTop(30);
@@ -256,6 +253,10 @@ public class MainMenuView implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 assetManager.setMusicVolume(musicVolume.getValue());
                 assetManager.setMusic(musicsSelectBox.getSelectedIndex());
+                assetManager.setSfxEnabled(sfxEnable.isChecked());
+
+                Setting.autoReloadEnabled = autoReload.isChecked();
+                assetManager.setWhiteBlackEnabled(whiteBlack.isChecked());
                 // complete
                 settingsWindow.remove();
             }

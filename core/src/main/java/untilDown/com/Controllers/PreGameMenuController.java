@@ -1,5 +1,8 @@
 package untilDown.com.Controllers;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import untilDown.com.Main;
 import untilDown.com.Models.GameAssetManager;
 import untilDown.com.Models.Setting;
@@ -14,12 +17,14 @@ public class PreGameMenuController {
 
     }
 
-    public void handleStartGame() {
-        if (view != null) {
-            if (view.getPlayButton().isChecked()) {
-                Main.getMain().getScreen().dispose();
-                Main.getMain().setScreen(new GameView(new GameController(), GameAssetManager.getManager().getSkin()));
+    public TextButton getPlayButton() {
+        TextButton playButton = new TextButton("Play", GameAssetManager.getManager().getSkin());
+        playButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Main.getMain().navigateToGame();
             }
-        }
+        });
+        return playButton;
     }
 }

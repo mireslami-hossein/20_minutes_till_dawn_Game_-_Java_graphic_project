@@ -10,9 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.ScreenUtils;
-import untilDown.com.Controllers.LoginMenuController;
-import untilDown.com.Controllers.MainMenuController;
-import untilDown.com.Controllers.SignupMenuController;
+import untilDown.com.Controllers.*;
 import untilDown.com.Models.App;
 import untilDown.com.Models.GameAssetManager;
 import untilDown.com.Views.*;
@@ -96,5 +94,14 @@ public class Main extends Game {
     public void navigateToScoreboard() {
         scoreboardView = new ScoreboardView(GameAssetManager.getManager().getSkin());
         setScreen(scoreboardView);
+    }
+
+    public void navigateToPregameMenu() {
+        preGameMenuView = new PreGameMenuView(new PreGameMenuController(), GameAssetManager.getManager().getSkin());
+        setScreen(preGameMenuView);
+    }
+    public void navigateToGame() {
+        gameView = new GameView(new GameController(), GameAssetManager.getManager().getSkin());
+        setScreen(gameView);
     }
 }
