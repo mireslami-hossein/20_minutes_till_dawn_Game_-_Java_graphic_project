@@ -22,6 +22,7 @@ public class PreGameMenuController {
         playButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Setting.durationOfGame = view.getSelectGameTime();
                 Main.getMain().navigateToGame();
             }
         });

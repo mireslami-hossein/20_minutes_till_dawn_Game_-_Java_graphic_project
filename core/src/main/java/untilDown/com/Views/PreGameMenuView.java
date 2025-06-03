@@ -120,19 +120,24 @@ public class PreGameMenuView implements Screen {
         table.add(playButton).width(App.fieldWidth/2).center();
 
         setSelectListeners();
+
         stage.addActor(table);
     }
 
     public void setSelectListeners() {
         selectHero.addListener(new ChangeListener() {
+            @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Setting.heroSelected = selectHero.getSelected();
                 selectedHeroTuxture = new Texture(Setting.heroSelected.getPath());
                 selectedHeroImage.setDrawable(new TextureRegionDrawable(new TextureRegion(selectedHeroTuxture)));
             }
         });
 
         selectGun.addListener(new ChangeListener() {
+            @Override
             public void changed(ChangeEvent event, Actor actor) {
+                Setting.gunSelcected = selectGun.getSelected();
                 selectedGunTuxture = new Texture(Setting.gunSelcected.getStillPath());
                 selectedGunImage.setDrawable(new TextureRegionDrawable(new TextureRegion(selectedGunTuxture)));
             }
@@ -174,7 +179,7 @@ public class PreGameMenuView implements Screen {
         }
     }
 
-    public TextButton getPlayButton() {
-        return playButton;
+    public int getSelectGameTime() {
+        return selectGameTime.getSelected();
     }
 }
