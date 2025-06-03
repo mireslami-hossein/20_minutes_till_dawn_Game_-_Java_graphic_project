@@ -45,6 +45,7 @@ public class PreGameMenuView implements Screen {
     private Label timeLabel;
     private SelectBox<Integer> selectGameTime;
     private TextButton playButton;
+    private TextButton backButton;
     private Table table;
 
     public PreGameMenuView(PreGameMenuController controller, Skin skin) {
@@ -68,6 +69,7 @@ public class PreGameMenuView implements Screen {
         selectGameTime = new SelectBox<>(skin);
 
         playButton = controller.getPlayButton();
+        backButton = controller.getBackButton();
     }
 
     @Override
@@ -114,10 +116,13 @@ public class PreGameMenuView implements Screen {
         mainTable.add(timeLabel);
         mainTable.add(selectGameTime).width(App.fieldWidth).padLeft(50);
         selectGameTime.setItems(2,5,10,20);
+
+        mainTable.row().padTop(50);
+        mainTable.add(playButton).width(App.fieldWidth/2).center();
+        mainTable.add(backButton).width(App.fieldWidth/2).center();
+
         table.add(mainTable).expandX();
 
-        table.row().padTop(75);
-        table.add(playButton).width(App.fieldWidth/2).center();
 
         setSelectListeners();
 

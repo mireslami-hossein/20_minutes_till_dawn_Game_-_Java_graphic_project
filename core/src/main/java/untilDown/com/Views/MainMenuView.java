@@ -246,7 +246,7 @@ public class MainMenuView implements Screen {
 
 
         settingsWindow.row().padTop(50);
-        TextButton closeBtn = new TextButton("Back", skin);
+        TextButton closeBtn = new TextButton("Save", skin);
         settingsWindow.add(closeBtn).center();
         closeBtn.addListener(new ChangeListener() {
             @Override

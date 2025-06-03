@@ -28,4 +28,15 @@ public class PreGameMenuController {
         });
         return playButton;
     }
+
+    public TextButton getBackButton() {
+        TextButton backButton = new TextButton("Back", GameAssetManager.getManager().getSkin());
+        backButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Main.getMain().navigateToMainMenu();
+            }
+        });
+        return backButton;
+    }
 }
