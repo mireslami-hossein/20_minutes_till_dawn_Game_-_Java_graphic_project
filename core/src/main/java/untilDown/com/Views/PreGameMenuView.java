@@ -2,6 +2,7 @@ package untilDown.com.Views;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Array;
@@ -9,29 +10,44 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import untilDown.com.Controllers.PreGameMenuController;
 import untilDown.com.Main;
-
-import java.util.ArrayList;
+import untilDown.com.Models.App;
 
 public class PreGameMenuView implements Screen {
     private final PreGameMenuController controller;
 
     private Stage stage;
-    private Label gameTitle;
 
-    private final TextButton playButton;
+    private Label gameTitleLabel;
+    private Label pregameMenuTitle;
+
+    private Label selectHeroLabel;
     private final SelectBox selectHero;
+    private Texture selectedHero;
+    private Image selectedHeroImage;
 
+    private Label selectGunLabel;
+    private final SelectBox selectGun;
+    private Texture selectedGun;
+    private Image selectedGunImage;
+
+    private final SelectBox time;
+    private final TextButton playButton;
     private Table table;
 
     public PreGameMenuView(PreGameMenuController controller, Skin skin) {
         this.controller = controller;
         controller.setView(this);
 
-        this.gameTitle = new Label("PreGame Menu", skin);
-        this.playButton = new TextButton("Play", skin);
-        this.selectHero = new SelectBox<>(skin);
+        gameTitleLabel = new Label(App.getApp().getGameTitle(), skin);
+        pregameMenuTitle = new Label("PreGame Menu", skin);
 
-        this.table = new Table(skin);
+        selectHeroLabel = new Label("Hero", skin);
+        selectHero = new SelectBox<>(skin);
+        selectedHero = new Texture("Hero.png");
+
+
+        playButton = new TextButton("Play", skin);
+        table = new Table(skin);
     }
 
     @Override
@@ -51,7 +67,7 @@ public class PreGameMenuView implements Screen {
 
         table.setFillParent(true);
         table.center();
-        table.add(gameTitle);
+        table.add(pregameMenuTitle);
         table.row().pad(10, 0, 10, 0);
         table.add(selectHero);
         table.row().pad(10, 0, 10, 0);

@@ -1,24 +1,27 @@
 package untilDown.com.Models;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import untilDown.com.Models.gun.PlayerGun;
+import untilDown.com.Models.hero.Hero;
+import untilDown.com.Models.hero.HeroType;
 
 public class Player {
-    private Texture playerTexture = GameAssetManager.getManager().getPlayer1_first_texture();
+    private Hero hero;
+    private PlayerGun gun;
 
-    private Sprite playerSprite = new Sprite(playerTexture);
     private float posX = 0;
     private float posY = 0;
     private float playerHealth = 100;
 
-
     private CollisionRect rect ; // bound of collision for player (a rectangle)
     private float time = 0;
-    private float speed = 5;
 
-    private boolean isPlayerIdle = true;
-    private boolean isPlayerRunning = false;
+    public enum State {
+        Idle, Running
+    }
+    private State state = State.Idle;
+
 
     // current Game data
     private int currentGameKills;
