@@ -30,8 +30,16 @@ public class Player {
     private PlayerGun gun;
     private ArrayList<ActiveBuff> activeBuffs = new ArrayList<>();
 
+    // In Game
+    private Sprite playerSprite;
+    private CollisionRect collisionRect;
 
     public Player() {
+        this.hero = new Hero(Setting.heroSelected);
+        this.gun = new PlayerGun(Setting.gunSelcected);
+
+        System.out.println(this.gun);
+        System.out.println(this.hero);
 //        playerSprite.setPosition((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight() / 2);
 //        playerSprite.setSize(playerSprite.getWidth() * 3, playerSprite.getHeight() * 3);
 //        rect = new CollisionRect((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight() / 2,
@@ -69,5 +77,9 @@ public class Player {
 
     public float getPosY() {
         return posY;
+    }
+
+    public Sprite getPlayerSprite() {
+        return playerSprite;
     }
 }

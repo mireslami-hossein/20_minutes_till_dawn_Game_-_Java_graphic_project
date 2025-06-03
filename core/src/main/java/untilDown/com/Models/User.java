@@ -21,7 +21,7 @@ public class User {
     private int totalTimeLived = 0;
 
 
-    private transient Player player = new Player();
+    private transient Player player;
 
 
     public User(){};
@@ -82,6 +82,12 @@ public class User {
 
     public int getTimeLived() {
         return totalTimeLived;
+    }
+
+    // Play
+    public Player getPlayer() {
+        player = new Player();
+        return player;
     }
 }
 

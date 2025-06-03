@@ -14,24 +14,24 @@ public class PlayerController {
     public PlayerController(Player player) {
         this.player = player;
     }
-//
-//    public void updateGame() {
-////        player.getPlayerSprite().draw(Main.getBatch());
-////
-////        if (player.isPlayerIdle()) {
-////            idleAnimation();
-////        }
-//
+
+    public void updateGame() {
+        player.getPlayerSprite().draw(Main.getBatch());
+
+//        if (player.isPlayerIdle()) {
+            idleAnimation();
+//        }
+
 //        handlePlayerInput();
-//    }
+    }
 //
-//    public void idleAnimation() {
-//        Animation<Texture> animation = GameAssetManager.getManager().getPlayer1_animation();
-//        animation.setPlayMode(Animation.PlayMode.LOOP);
-//
-//        player.setTime(player.getTime() + Gdx.graphics.getDeltaTime());
-//        player.getPlayerSprite().setRegion(animation.getKeyFrame(player.getTime()));
-//    }
+    public void idleAnimation() {
+        Animation<Texture> animation = GameAssetManager.getManager().getPlayer1_animation();
+        animation.setPlayMode(Animation.PlayMode.LOOP);
+
+        player.setTime(player.getTime() + Gdx.graphics.getDeltaTime());
+        player.getPlayerSprite().setRegion(animation.getKeyFrame(player.getTime()));
+    }
 //
 //    public void handlePlayerInput() {
 //        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
@@ -49,7 +49,7 @@ public class PlayerController {
 //        }
 //    }
 //
-//    public Player getPlayer() {
-//        return player;
-//    }
+    public Player getPlayer() {
+        return player;
+    }
 }

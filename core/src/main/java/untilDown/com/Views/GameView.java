@@ -3,6 +3,7 @@ package untilDown.com.Views;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -14,41 +15,34 @@ import untilDown.com.Main;
 
 // by setting InputProcessor to GameView we can handle each Key doing easily!
 public class GameView implements Screen, InputProcessor {
+
     private GameController controller;
     private Stage stage;
 
-    private TextButton playButton;
-
-    private Table table;
+    private Texture background;
+    private Texture player;
 
 
     public GameView(GameController controller, Skin skin) {
         this.controller = controller;
         controller.setView(this);
-
-        playButton = new TextButton("Play", skin);
     }
 
 
     @Override
     public void show() {
         stage = new Stage(new ScreenViewport());
-        table = new Table();
-        stage.clear();
         Gdx.input.setInputProcessor(this);
 
-        table.setFillParent(true);
-        table.center();
-        table.add(playButton);
-
-        stage.addActor(table);
+        Texture background = new Texture(Gdx.files.internal("background.png"));
     }
 
     @Override
     public void render(float v) {
         ScreenUtils.clear(0, 0, 0, 1);
         Main.getBatch().begin();
-        controller.updateGame();
+//        controller.updateGame();
+        Main.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth() * 2, Gdx.graphics.getHeight() * 2);
         Main.getBatch().end();
 
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));

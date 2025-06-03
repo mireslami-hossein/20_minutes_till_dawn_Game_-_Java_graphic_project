@@ -17,7 +17,6 @@ public class App {
     private ArrayList<User> users = new ArrayList<>();
     private User loggedInUser = null;
 
-    private boolean autoReloadEnabled = true;
 
     private App() {
         loadUsers();
@@ -90,14 +89,5 @@ public class App {
 
     public List<User> getAllUsers() {
         return users;
-    }
-
-    // auto reload
-    public boolean isAutoReloadEnabled() {
-        return autoReloadEnabled;
-    }
-
-    public void setAutoReloadEnabled(boolean autoReloadEnabled) {
-        this.autoReloadEnabled = autoReloadEnabled;
     }
 }

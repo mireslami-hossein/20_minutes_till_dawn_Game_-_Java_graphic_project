@@ -13,12 +13,12 @@ public class WorldController {
     public WorldController(PlayerController playerController) {
         this.backgroundTexture = new Texture(Gdx.files.internal("background.png"));
         this.playerController = playerController;
-
-        Main.getBatch().draw(backgroundTexture, backgroundX, backgroundY);
     }
 
 
     public void updateGame() {
+        backgroundX = playerController.getPlayer().getPosX();
+        backgroundY = playerController.getPlayer().getPosY();
         Main.getBatch().draw(backgroundTexture, backgroundX, backgroundY);
     }
 }

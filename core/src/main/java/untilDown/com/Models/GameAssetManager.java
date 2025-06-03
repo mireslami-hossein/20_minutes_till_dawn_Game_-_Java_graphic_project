@@ -26,13 +26,8 @@ public class GameAssetManager {
     private Texture[] player1_texture;
     private Animation<Texture> player1_animation;
 
-    // gun
-//    private String smg = "guns/SMGStill/SMGStill.png";
-//    private Texture smgTexture = new Texture(Gdx.files.internal(smg));
-
     private String bullet = "guns/bullet.png";
 
-    // bullet
 
 
     private GameAssetManager() {

@@ -1,5 +1,6 @@
 package untilDown.com.Controllers;
 
+import untilDown.com.Models.App;
 import untilDown.com.Models.Player;
 import untilDown.com.Views.GameView;
 
@@ -14,16 +15,17 @@ public class GameController {
     public void setView(GameView view) {
         this.view = view;
 
-        playerController = new PlayerController(new Player());
-        worldController = new WorldController(playerController);
-        weaponController = new WeaponController();
+//        Player player = App.getApp().getLoggedInUser().getPlayer();
+//        playerController = new PlayerController(player);
+//        worldController = new WorldController(playerController);
+//        weaponController = new WeaponController();
     }
 
-    public void updateGame() {
-        if (view != null) {
-//            playerController.updateGame();
-            weaponController.updateGame();
-            worldController.updateGame();
-        }
-    }
+//    public void updateGame() {
+//        if (view != null) {
+////            playerController.updateGame();
+//            weaponController.updateGame();
+//            worldController.updateGame();
+//        }
+//    }
 }
