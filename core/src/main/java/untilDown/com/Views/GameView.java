@@ -78,13 +78,13 @@ public class GameView implements Screen, InputProcessor {
         UIViewport = new ScreenViewport();
         stage = new Stage(UIViewport);
 
-        // heart
+        // hearts
         HPHeart = new Texture[3];
         for (int i = 0; i < HPHeart.length; i++) {
             HPHeart[i] = new Texture(Gdx.files.internal("heart/HeartAnimation_" + i + ".png"));
         }
 
-        // hearts
+        HPHeartEmptied = new Texture(Gdx.files.internal("heart/HeartEmpty.png"));
         int x = 10;
         for (int i = 0; i < 10; i++) {
             HeartAnimationActor heart = new HeartAnimationActor(HPHeart, x, UIViewport.getScreenHeight() - 50, heartSize, heartSize, 0.3f);
@@ -128,7 +128,7 @@ public class GameView implements Screen, InputProcessor {
         int maxHP = controller.getPlayer().getHero().getMaxHP();
 
         for (int i = 0; i < heartActors.size(); i++) {
-            heartActors.get(i).setVisible(true);
+            heartActors.get(i).setVisible(i < currentHP);
             emptyHeartImages.get(i).setVisible(i >= currentHP && i < maxHP);
         }
 
