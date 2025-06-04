@@ -1,7 +1,9 @@
 package untilDown.com.Models;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import untilDown.com.Models.gun.PlayerGun;
 import untilDown.com.Models.hero.Hero;
 
@@ -9,9 +11,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Player {
-    private float posX = 0;
-    private float posY = 0;
-
     private CollisionRect rect ; // bound of collision for player (a rectangle)
     private float time = 0;
 
@@ -32,18 +31,19 @@ public class Player {
 
     // In Game
     private Sprite playerSprite;
+    private Texture playerTexture;
+
     private CollisionRect collisionRect;
+    private Vector2 playerPosition = new Vector2((float)Gdx.graphics.getWidth() / 2,(float)Gdx.graphics.getHeight() / 2);
+
 
     public Player() {
         this.hero = new Hero(Setting.heroSelected);
         this.gun = new PlayerGun(Setting.gunSelcected);
 
-        System.out.println(this.gun);
-        System.out.println(this.hero);
-//        playerSprite.setPosition((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight() / 2);
-//        playerSprite.setSize(playerSprite.getWidth() * 3, playerSprite.getHeight() * 3);
-//        rect = new CollisionRect((float) Gdx.graphics.getWidth() / 2, (float) Gdx.graphics.getHeight() / 2,
-//            playerSprite.getWidth() * 3, playerSprite.getHeight() * 3);
+        playerTexture = new Texture(Gdx.files.internal(hero.getType().getPath()));
+        playerSprite = new Sprite(playerTexture);
+        playerSprite.setPosition(playerPosition.x, playerPosition.y);
     }
 
 //    public Sprite getPlayerSprite() {
@@ -71,15 +71,19 @@ public class Player {
         this.time = time;
     }
 
-    public float getPosX() {
-        return posX;
-    }
-
-    public float getPosY() {
-        return posY;
-    }
-
     public Sprite getPlayerSprite() {
         return playerSprite;
+    }
+
+    public Vector2 getPosition() {
+        return playerPosition;
+    }
+
+    public void changePlayerPosition(float x, float y) {
+        playerPosition.add(x, y);
+    }
+
+    public int getSpeed() {
+        return hero.getType().getSpeed();
     }
 }

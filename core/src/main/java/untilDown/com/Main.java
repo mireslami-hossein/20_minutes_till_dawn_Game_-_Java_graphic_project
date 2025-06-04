@@ -38,8 +38,7 @@ public class Main extends Game {
         main = this;
         batch = new SpriteBatch();
 
-//        navigateToSignupMenu();
-        navigateToGame();
+        navigateToSignupMenu();
     }
 
     @Override

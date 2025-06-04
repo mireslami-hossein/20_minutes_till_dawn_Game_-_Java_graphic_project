@@ -12,4 +12,8 @@ public class Hero {
         this.currentHP = heroType.getMaxHp();
         this.currentSpeed = heroType.getSpeed();
     }
+
+    public HeroType getType() {
+        return heroType;
+    }
 }

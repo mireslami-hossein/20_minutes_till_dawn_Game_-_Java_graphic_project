@@ -17,8 +17,6 @@ public class WorldController {
 
 
     public void updateGame() {
-        backgroundX = playerController.getPlayer().getPosX();
-        backgroundY = playerController.getPlayer().getPosY();
         Main.getBatch().draw(backgroundTexture, backgroundX, backgroundY);
     }
 }

@@ -21,8 +21,6 @@ public class User {
     private int totalTimeLived = 0;
 
 
-    private transient Player player;
-
 
     public User(){};
 
@@ -85,10 +83,7 @@ public class User {
     }
 
     // Play
-    public Player getPlayer() {
-        player = new Player();
-        return player;
-    }
+
 }
 
 enum UserType {

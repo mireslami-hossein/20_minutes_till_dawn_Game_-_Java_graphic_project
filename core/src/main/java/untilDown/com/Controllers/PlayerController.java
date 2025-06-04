@@ -1,28 +1,42 @@
 package untilDown.com.Controllers;
 
 import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import untilDown.com.Main;
 import untilDown.com.Models.GameAssetManager;
+import untilDown.com.Models.GameKeysManager;
 import untilDown.com.Models.Player;
 
 public class PlayerController {
     private Player player;
+
+    int up = GameKeysManager.getManager().getGameKeys().get("goUp");
+    int down = GameKeysManager.getManager().getGameKeys().get("goDown");
+    int left = GameKeysManager.getManager().getGameKeys().get("goLeft");
+    int right = GameKeysManager.getManager().getGameKeys().get("goRight");
 
     public PlayerController(Player player) {
         this.player = player;
     }
 
     public void updateGame() {
-        player.getPlayerSprite().draw(Main.getBatch());
+        drawPlayer();
 
 //        if (player.isPlayerIdle()) {
-            idleAnimation();
+//            idleAnimation();
 //        }
 
-//        handlePlayerInput();
+        handlePlayerInput();
+    }
+
+    private void drawPlayer() {
+        Sprite playerSprite = player.getPlayerSprite();
+        playerSprite.setPosition(player.getPosition().x, player.getPosition().y);
+        player.getPlayerSprite().draw(Main.getBatch());
     }
 //
     public void idleAnimation() {
@@ -33,21 +47,21 @@ public class PlayerController {
         player.getPlayerSprite().setRegion(animation.getKeyFrame(player.getTime()));
     }
 //
-//    public void handlePlayerInput() {
-//        if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-//            player.addToPosition(0, -player.getSpeed());
-//        }
-//        if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-//            player.addToPosition(0, player.getSpeed());
-//        }
-//        if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-//            player.addToPosition(player.getSpeed(), 0);
-//        }
-//        if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-//            player.addToPosition(-player.getSpeed(), 0);
+    public void handlePlayerInput() {
+        if (Gdx.input.isKeyPressed(up)) {
+            player.changePlayerPosition(0, player.getSpeed());
+        }
+        if (Gdx.input.isKeyPressed(down)) {
+            player.changePlayerPosition(0, -player.getSpeed());
+        }
+        if (Gdx.input.isKeyPressed(right)) {
+            player.changePlayerPosition(player.getSpeed(), 0);
+        }
+        if (Gdx.input.isKeyPressed(left)) {
+            player.changePlayerPosition(-player.getSpeed(), 0);
 //            player.getPlayerSprite().flip(true, false);
-//        }
-//    }
+        }
+    }
 //
     public Player getPlayer() {
         return player;
