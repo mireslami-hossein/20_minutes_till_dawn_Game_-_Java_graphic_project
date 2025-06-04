@@ -17,10 +17,7 @@ import java.util.ArrayList;
 public class WeaponController {
     Player player;
     ArrayList<Bullet> bullets = new ArrayList<>();
-    public enum GunState {
-        Still, Reloading
-    }
-    GunState gunState = GunState.Still;
+
     float reloadTimer = 0f;
 
     public WeaponController(Player player) {
@@ -56,7 +53,8 @@ public class WeaponController {
     }
 
     public void handleShoot(float targetXInWorld, float targetYInWorld) {
-        if (gunState == GunState.Reloading) return;
+        PlayerGun gun = player.getGun();
+        if (gun.getGunState() == PlayerGun.GunState.Reloading) return;
 
         Vector2 velocity = new Vector2();
         velocity.x = targetXInWorld- player.getPosition().x;
@@ -64,7 +62,6 @@ public class WeaponController {
         velocity.nor();
 
         velocity.setLength(15f);
-        PlayerGun gun = player.getGun();
         if (gun.getCurrentAmmo() == 0) {
             return;
         } else {
@@ -90,16 +87,17 @@ public class WeaponController {
 
     private void handleReload(float delta) {
         PlayerGun gun = player.getGun();
+        PlayerGun.GunState gunState = gun.getGunState();
         float reloadingTime = player.getGun().getCurrentReloadTime();
         if (Gdx.input.isKeyPressed(GameKeysManager.getManager().getKey("reload")) ||
             (gun.getCurrentAmmo() == 0 && Setting.autoReloadEnabled)) {
             if (gun.getCurrentAmmo() < gun.getCurrentMaxAmmo())
-                gunState = GunState.Reloading;
+                gun.setGunState(PlayerGun.GunState.Reloading);
         }
-        if (gunState == GunState.Reloading) {
+        if (gunState == PlayerGun.GunState.Reloading) {
             if (reloadTimer >= reloadingTime) {
                 reloadTimer = 0f;
-                gunState = GunState.Still;
+                gun.setGunState(PlayerGun.GunState.Still);
                 gun.fullAmmo();
             } else {
                 // TODO: play animation

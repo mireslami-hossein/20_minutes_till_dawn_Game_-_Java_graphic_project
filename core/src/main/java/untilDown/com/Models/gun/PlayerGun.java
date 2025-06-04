@@ -14,6 +14,11 @@ public class PlayerGun {
     private int currentMaxAmmo;
     private int currentAmmo;
 
+    public enum GunState {
+        Still, Reloading
+    }
+    private GunState gunState = GunState.Still;
+
     public PlayerGun(GunType gunType) {
         this.type = gunType;
 
@@ -64,5 +69,17 @@ public class PlayerGun {
 
     public int getCurrentProjectilesPerShot() {
         return currentProjectilesPerShot;
+    }
+
+    public GunState getGunState() {
+        return gunState;
+    }
+
+    public void setGunState(GunState gunState) {
+        this.gunState = gunState;
+    }
+
+    public boolean isReloading() {
+        return gunState == GunState.Reloading;
     }
 }

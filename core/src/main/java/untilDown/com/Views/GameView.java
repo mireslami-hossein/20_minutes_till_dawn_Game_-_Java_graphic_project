@@ -199,11 +199,11 @@ public class GameView implements Screen, InputProcessor {
         for (int i = 0; i < playerGun.getCurrentAmmo(); i++) {
             ammoSlashes.append("/");
         }
-//        if (playerGun.isReloading()) {
-//            gunAmmoLabel.setText("Reloading...");
-//        } else {
+        if (playerGun.isReloading()) {
+            gunAmmoLabel.setText("Reloading...");
+        } else {
             gunAmmoLabel.setText("(" + playerGun.getCurrentAmmo() + ") " + ammoSlashes);
-//        }
+        }
     }
 
     @Override
