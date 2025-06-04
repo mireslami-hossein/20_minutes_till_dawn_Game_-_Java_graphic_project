@@ -46,6 +46,8 @@ public class Player {
         playerSprite = new Sprite(playerTexture);
         playerSprite.setScale(2f);
         playerSprite.setPosition(playerPosition.x, playerPosition.y);
+
+        collisionRect = new CollisionRect(playerPosition.x, playerPosition.y, playerSprite.getWidth(), playerSprite.getHeight());
     }
 
     public void setPlayerState(PlayerState playerState) {
@@ -124,5 +126,9 @@ public class Player {
 
     public PlayerGun getGun() {
         return gun;
+    }
+
+    public boolean collidesWith(CollisionRect collisionRect) {
+        return collisionRect.collidesWith(collisionRect);
     }
 }

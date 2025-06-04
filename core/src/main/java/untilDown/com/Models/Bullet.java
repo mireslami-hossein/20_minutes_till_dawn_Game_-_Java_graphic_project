@@ -11,6 +11,8 @@ public class Bullet {
     private Texture texture;
     private Sprite sprite;
 
+    private CollisionRect collisionRect;
+
     private int damage;
 
     public Bullet(float x, float y, Vector2 velocity,int damage) {
@@ -21,6 +23,8 @@ public class Bullet {
         sprite = new Sprite(texture);
         sprite.setSize(20 , 20);
         sprite.setPosition(x, y);
+
+        collisionRect = new CollisionRect(x, y, sprite.getWidth(), sprite.getHeight());
     }
 
     public void addToPositionInATime() {
