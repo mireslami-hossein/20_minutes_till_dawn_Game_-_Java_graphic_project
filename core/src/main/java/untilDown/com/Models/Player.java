@@ -33,6 +33,10 @@ public class Player {
     // In Game
     private Sprite playerSprite;
     private Texture playerTexture;
+    public enum Direction {
+        Left, Right
+    }
+    public Direction direction = Direction.Right;
 
     private CollisionRect collisionRect;
     private Vector2 playerPosition = new Vector2((float)Gdx.graphics.getWidth() / 2,(float)Gdx.graphics.getHeight() / 2);
@@ -126,6 +130,14 @@ public class Player {
 
     public PlayerGun getGun() {
         return gun;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
     }
 
     public boolean collidesWith(CollisionRect collisionRect) {

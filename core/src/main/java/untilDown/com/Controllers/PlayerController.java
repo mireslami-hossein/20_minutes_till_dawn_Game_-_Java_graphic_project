@@ -61,15 +61,33 @@ public class PlayerController {
     }
 
     public void idleAnimation() {
-        player.getPlayerSprite().setRegion(idleAnimation.getKeyFrame(stateTime, true));
+        TextureRegion frame = idleAnimation.getKeyFrame(stateTime, true);
+        if (player.getDirection() == Player.Direction.Left && !frame.isFlipX()) {
+            frame.flip(true, false);
+        } else if (player.getDirection() == Player.Direction.Right && frame.isFlipX()) {
+            frame.flip(true, false);
+        }
+        player.getPlayerSprite().setRegion(frame);
     }
 
     public void walkAnimation() {
-        player.getPlayerSprite().setRegion(walkAnimation.getKeyFrame(stateTime, true));
+        TextureRegion frame = walkAnimation.getKeyFrame(stateTime, true);
+        if (player.getDirection() == Player.Direction.Left && !frame.isFlipX()) {
+            frame.flip(true, false);
+        } else if (player.getDirection() == Player.Direction.Right && frame.isFlipX()) {
+            frame.flip(true, false);
+        }
+        player.getPlayerSprite().setRegion(frame);
     }
 
     public void runAnimation() {
-        player.getPlayerSprite().setRegion(runAnimation.getKeyFrame(stateTime, true));
+        TextureRegion frame = runAnimation.getKeyFrame(stateTime, true);
+        if (player.getDirection() == Player.Direction.Left && !frame.isFlipX()) {
+            frame.flip(true, false);
+        } else if (player.getDirection() == Player.Direction.Right && frame.isFlipX()) {
+            frame.flip(true, false);
+        }
+        player.getPlayerSprite().setRegion(frame);
     }
 
 
@@ -88,10 +106,11 @@ public class PlayerController {
         }
         if (Gdx.input.isKeyPressed(right)) {
             walkTo(player.getSpeed(), 0);
+            player.setDirection(Player.Direction.Right);
         }
         if (Gdx.input.isKeyPressed(left)) {
             walkTo(-player.getSpeed(), 0);
-            player.getPlayerSprite().setFlip(true, false);
+            player.setDirection(Player.Direction.Left);
         }
 
     }
