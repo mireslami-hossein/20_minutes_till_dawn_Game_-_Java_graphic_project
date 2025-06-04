@@ -22,8 +22,8 @@ public class ScoreboardView implements Screen {
     private Stage stage;
     private Skin skin;
 
-    private Table mainTable;         // For overall screen layout
-    private Table dataContentTable;  // For headers and user data rows to ensure alignment
+    private Table mainTable;
+    private Table dataContentTable;
     private SelectBox<SortType> sortTypeBox;
     private TextButton back;
 
@@ -33,7 +33,13 @@ public class ScoreboardView implements Screen {
 
     public ScoreboardView(Skin skin) {
         this.skin = skin;
-        this.users = new ArrayList<>(App.getApp().getAllUsers()); // It's good practice to copy
+        this.users = new ArrayList<>(App.getApp().getAllUsers());
+
+
+        User user = App.getApp().getLoggedInUser();
+        if (user.isGuest()) {
+            users.add(user);
+        }
     }
 
     @Override

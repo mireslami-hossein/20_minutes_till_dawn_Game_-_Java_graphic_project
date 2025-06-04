@@ -107,7 +107,7 @@ public class ProfileMenuView implements Screen {
 
         userScores.setFontScale(2f);
         userScores.setColor(Color.CYAN);
-        userDetailsTable.add(userScores).left().padLeft(250);
+        userDetailsTable.add(userScores).left().padLeft(200);
 
         table.add(userDetailsTable).expandX().fillX();
 

@@ -68,6 +68,7 @@ public class EnemyController {
         }
         if (timeToSpawnEyeBats <= 0) {
             addBats();
+            timeToSpawnEyeBats = 10f;
         }
 
         update(delta, player);
@@ -79,11 +80,12 @@ public class EnemyController {
         while (enemiesIterator.hasNext()) {
             Enemy next = enemiesIterator.next();
             next.update(delta, player);
-            if (player.collidesWith(next.getSprite())) {
-                player.addToHp(-1);
-                enemiesIterator.remove();
-            }
+//            if (player.collidesWith(next.getSprite())) {
+//                player.addToHp(-1);
+//                enemiesIterator.remove();
+//            }
         }
+
     }
 
     public void draw() {

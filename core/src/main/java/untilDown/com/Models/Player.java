@@ -135,12 +135,12 @@ public class Player {
         this.direction = direction;
     }
 
-    public boolean collidesWith(Sprite sprite) {
-        return playerPosition.x < sprite.getX() && playerPosition.x + playerSprite.getWidth() > sprite.getX()
-            && playerPosition.y < sprite.getY() && playerPosition.y + playerSprite.getHeight() > sprite.getY() ;
-    }
-
-    public void addToHp(int amount) {
-        hero.changeHP(amount);
-    }
+//    public boolean collidesWith(Sprite sprite) {
+//        return playerPosition.x < sprite.getX() && playerPosition.x + playerSprite.getWidth() > sprite.getX()
+//            && playerPosition.y < sprite.getY() && playerPosition.y + playerSprite.getHeight() > sprite.getY() ;
+//    }
+//
+//    public void addToHp(int amount) {
+//        hero.changeHP(amount);
+//    }
 }
