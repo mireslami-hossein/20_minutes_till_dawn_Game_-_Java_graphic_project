@@ -49,7 +49,7 @@ public class GameController {
     }
 
     public void updateCamera() {
-        camera.position.set(player.getPosition().x, player.getPosition().y, 0);
+        camera.position.set(player.getPosition().x + player.getPlayerSprite().getWidth()/2, player.getPosition().y + player.getPlayerSprite().getHeight()/2, 0);
         camera.update();
         Main.getBatch().setProjectionMatrix(camera.combined);
     }

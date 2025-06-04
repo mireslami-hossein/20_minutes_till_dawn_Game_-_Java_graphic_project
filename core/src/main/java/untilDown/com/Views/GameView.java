@@ -28,27 +28,26 @@ public class GameView implements Screen, InputProcessor {
     public GameView(GameController controller, Skin skin) {
         this.controller = controller;
         controller.setView(this);
-
-        viewport = new ScreenViewport();
     }
 
 
     @Override
     public void show() {
-        stage = new Stage(viewport);
         Gdx.input.setInputProcessor(this);
 
         background = new Texture(Gdx.files.internal("background.png"));
         controller.setCamera();
+
+        // IMPORTANT : view port and camera should be set together
+        viewport = new ScreenViewport(controller.getCamera());
+        stage = new Stage(viewport);
     }
 
     @Override
     public void render(float v) {
         ScreenUtils.clear(0, 0, 0, 1);
-
         controller.updateCamera();
 
-        Main.getBatch().setProjectionMatrix(controller.getCamera().combined);
         Main.getBatch().begin();
         Main.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth() * 2, Gdx.graphics.getHeight() * 2);
         controller.updateGame();
