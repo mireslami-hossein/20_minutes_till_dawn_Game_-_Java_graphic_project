@@ -17,9 +17,9 @@ public class Tentacle extends Enemy {
     public Tentacle(Vector2 position) {
         super(25, position);
 
-        sprite = new Sprite();
         sprite.setPosition(position.x, position.y);
         tentacleAnimation = GameAssetManager.getManager().getTentacleAnimation();
+        sprite = new Sprite();
     }
 
     @Override

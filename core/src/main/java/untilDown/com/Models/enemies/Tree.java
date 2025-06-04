@@ -15,9 +15,9 @@ public class Tree extends Enemy {
     public Tree(Vector2 position) {
         super(250, position);
 
-        sprite = new Sprite();
-        sprite.setPosition(position.x, position.y);
         treeAnimation = GameAssetManager.getManager().getTreeAnimation();
+        sprite = new Sprite(treeAnimation.getKeyFrame(0));
+        sprite.setPosition(position.x, position.y);
     }
 
     @Override

@@ -28,4 +28,8 @@ public class Hero {
     public int getSpeed() {
         return currentSpeed;
     }
+
+    public void changeHP(int amount) {
+        currentHP += amount;
+    }
 }

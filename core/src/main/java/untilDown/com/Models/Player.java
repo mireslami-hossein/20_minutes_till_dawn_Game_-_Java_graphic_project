@@ -12,7 +12,6 @@ import untilDown.com.Models.hero.HeroType;
 import java.util.ArrayList;
 
 public class Player {
-    private CollisionRect rect ; // bound of collision for player (a rectangle)
     private float time = 0;
 
     public enum PlayerState {
@@ -24,7 +23,6 @@ public class Player {
     // current Game data
     private int currentGameKills = 0;
     private int currentGameXP = 0;
-    private int currentGameTimeLived = 0;
 
     private Hero hero;
     private PlayerGun gun;
@@ -38,7 +36,6 @@ public class Player {
     }
     public Direction direction = Direction.Right;
 
-    private CollisionRect collisionRect;
     private Vector2 playerPosition = new Vector2((float)Gdx.graphics.getWidth() / 2,(float)Gdx.graphics.getHeight() / 2);
 
 
@@ -50,8 +47,6 @@ public class Player {
         playerSprite = new Sprite(playerTexture);
         playerSprite.setScale(2f);
         playerSprite.setPosition(playerPosition.x, playerPosition.y);
-
-        collisionRect = new CollisionRect(playerPosition.x, playerPosition.y, playerSprite.getWidth(), playerSprite.getHeight());
     }
 
     public void setPlayerState(PlayerState playerState) {
@@ -140,7 +135,12 @@ public class Player {
         this.direction = direction;
     }
 
-    public boolean collidesWith(CollisionRect collisionRect) {
-        return collisionRect.collidesWith(collisionRect);
+    public boolean collidesWith(Sprite sprite) {
+        return playerPosition.x < sprite.getX() && playerPosition.x + playerSprite.getWidth() > sprite.getX()
+            && playerPosition.y < sprite.getY() && playerPosition.y + playerSprite.getHeight() > sprite.getY() ;
+    }
+
+    public void addToHp(int amount) {
+        hero.changeHP(amount);
     }
 }

@@ -51,8 +51,8 @@ public class GameAssetManager {
     public void loadTree() {
         Texture treeSprite = new Texture(Gdx.files.internal("enemy/tree/spritesheet.png"));
         TextureRegion[][] region = TextureRegion.split(treeSprite, treeSprite.getWidth()/3, treeSprite.getHeight());
-        TextureRegion[] runFrames = new TextureRegion[region.length];
-        for (int i = 0; i < region.length; i++) {
+        TextureRegion[] runFrames = new TextureRegion[3];
+        for (int i = 0; i < 3; i++) {
             runFrames[i] = region[i][0];
         }
         treeAnimation = new Animation<>(1f, runFrames);
@@ -62,8 +62,8 @@ public class GameAssetManager {
     public void loadTentacle() {
         Texture tentacleSprite = new Texture(Gdx.files.internal("enemy/tentacle/spritesheet.png"));
         TextureRegion[][] region = TextureRegion.split(tentacleSprite, tentacleSprite.getWidth()/4, tentacleSprite.getHeight());
-        TextureRegion[] runFrames = new TextureRegion[region.length];
-        for (int i = 0; i < region.length; i++) {
+        TextureRegion[] runFrames = new TextureRegion[4];
+        for (int i = 0; i < 4; i++) {
             runFrames[i] = region[i][0];
         }
         tentacleAnimation = new Animation<>(1f, runFrames);
@@ -73,8 +73,8 @@ public class GameAssetManager {
     public void loadEyeBat() {
         Texture eyeBatSprite = new Texture(Gdx.files.internal("enemy/eyeBat/spritesheet.png"));
         TextureRegion[][] region = TextureRegion.split(eyeBatSprite, eyeBatSprite.getWidth()/4, eyeBatSprite.getHeight());
-        TextureRegion[] runFrames = new TextureRegion[region.length];
-        for (int i = 0; i < region.length; i++) {
+        TextureRegion[] runFrames = new TextureRegion[4];
+        for (int i = 0; i < 4; i++) {
             runFrames[i] = region[i][0];
         }
         eyeBatAnimation = new Animation<>(1f, runFrames);

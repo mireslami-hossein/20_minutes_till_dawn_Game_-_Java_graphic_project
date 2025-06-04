@@ -21,9 +21,9 @@ public class ElderBoss extends Enemy {
     public ElderBoss(Vector2 position) {
         super(400, position);
 
-        sprite = new Sprite();
-        sprite.setPosition(position.x, position.y);
         elderBoss = GameAssetManager.getManager().getElder();
+        sprite = new Sprite(elderBoss);
+        sprite.setPosition(position.x, position.y);
     }
 
     @Override

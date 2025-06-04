@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import untilDown.com.Controllers.EnemyController;
 import untilDown.com.Models.Bullet;
+import untilDown.com.Models.CollisionRect;
 import untilDown.com.Models.GameAssetManager;
 import untilDown.com.Models.Player;
 
@@ -20,9 +21,9 @@ public class EyeBat extends Enemy {
     public EyeBat(Vector2 position) {
         super(50, position);
 
-        sprite = new Sprite();
-        sprite.setPosition(position.x, position.y);
         eyeBatAnimation = GameAssetManager.getManager().getTreeAnimation();
+        sprite = new Sprite(eyeBatAnimation.getKeyFrame(0));
+        sprite.setPosition(position.x, position.y);
     }
 
     @Override

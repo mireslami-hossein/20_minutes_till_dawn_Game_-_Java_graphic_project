@@ -7,7 +7,6 @@ import untilDown.com.Models.CollisionRect;
 import untilDown.com.Models.Player;
 
 public abstract class Enemy {
-    private CollisionRect collisionRect;
     private int hp;
     protected Sprite sprite;
     protected Vector2 position;
@@ -33,5 +32,9 @@ public abstract class Enemy {
     }
     public void addPosition(Vector2 position) {
         this.position.add(position);
+    }
+
+    public Sprite getSprite() {
+        return sprite;
     }
 }
