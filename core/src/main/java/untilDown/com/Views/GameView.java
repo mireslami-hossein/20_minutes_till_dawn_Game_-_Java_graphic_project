@@ -18,6 +18,9 @@ import untilDown.com.Controllers.GameController;
 import untilDown.com.Main;
 import untilDown.com.Models.HeartAnimationActor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // by setting InputProcessor to GameView we can handle each Key doing easily!
 public class GameView implements Screen, InputProcessor {
 
@@ -26,11 +29,12 @@ public class GameView implements Screen, InputProcessor {
 
     private Texture background;
 
-    private Texture[] HPHeart;
-    private Animation<TextureRegion> HPHeartAnimation;
     private int heartSize = 32;
 
+    private Texture[] HPHeart;
     private Texture HPHeartEmptied;
+    private List<HeartAnimationActor> heartActors = new ArrayList<>();
+    private List<Image> emptyHeartImages = new ArrayList<>();
 
 
     private Texture heroTexture;
@@ -80,8 +84,24 @@ public class GameView implements Screen, InputProcessor {
             HPHeart[i] = new Texture(Gdx.files.internal("heart/HeartAnimation_" + i + ".png"));
         }
 
+        // hearts
+        int x = 10;
+        for (int i = 0; i < 10; i++) {
+            HeartAnimationActor heart = new HeartAnimationActor(HPHeart, x, UIViewport.getScreenHeight() - 50, heartSize, heartSize, 0.3f);
+            heart.setVisible(false);
+            stage.addActor(heart);
+            heartActors.add(heart);
 
-        HPHeartEmptied = new Texture(Gdx.files.internal("heart/HeartEmpty.png"));
+            Image emptyHeart = new Image(new TextureRegionDrawable(new TextureRegion(HPHeartEmptied)));
+            emptyHeart.setSize(heartSize, heartSize);
+            emptyHeart.setPosition(x, UIViewport.getScreenHeight() - 50);
+            emptyHeart.setVisible(false);
+            stage.addActor(emptyHeart);
+            emptyHeartImages.add(emptyHeart);
+
+            x += 32;
+        }
+
 
         heroTexture = new Texture(controller.getPlayer().getHeroType().getPortraitPath());
 
@@ -104,25 +124,12 @@ public class GameView implements Screen, InputProcessor {
     }
 
     public void updateStageDetails() {
-        stage.clear();
-
         int currentHP = controller.getPlayer().getHero().getCurrentHP();
         int maxHP = controller.getPlayer().getHero().getMaxHP();
 
-
-        // hearts
-        int x = 10;
-        for (int i = 0; i < currentHP; i++) {
-            HeartAnimationActor actor = new HeartAnimationActor(HPHeart, x, UIViewport.getScreenHeight() - 50, heartSize, heartSize, 0.2f);
-            stage.addActor(actor);
-            x += 36;
-        }
-        for (int i = 0; i < maxHP - currentHP; i++) {
-            Image heartImage = new Image(new TextureRegionDrawable(new TextureRegion(HPHeartEmptied)));
-            heartImage.setSize(heartSize, heartSize);
-            heartImage.setPosition(x, UIViewport.getScreenHeight() - 50);
-            stage.addActor(heartImage);
-            x += 36;
+        for (int i = 0; i < heartActors.size(); i++) {
+            heartActors.get(i).setVisible(true);
+            emptyHeartImages.get(i).setVisible(i >= currentHP && i < maxHP);
         }
 
         levelLabel.setText("Level: " + controller.getPlayer().getPlayerLevel());
