@@ -2,30 +2,56 @@ package untilDown.com.Controllers;
 
 import com.badlogic.gdx.Gdx;
 
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import untilDown.com.Main;
-import untilDown.com.Models.GameAssetManager;
 import untilDown.com.Models.GameKeysManager;
 import untilDown.com.Models.Player;
 
 public class PlayerController {
     private Player player;
 
+    private Animation<TextureRegion> idleAnimation;
+    private Animation<TextureRegion> runAnimation;
+    private Animation<TextureRegion> walkAnimation;
+
+    private float stateTime = 0f;
+
     public PlayerController(Player player) {
         this.player = player;
+        loadAnimation();
     }
 
+    public void loadAnimation() {
+        idleAnimation = player.getHeroType().getIdleAnimation();
+        idleAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        runAnimation = player.getHeroType().getRunAnimation();
+        runAnimation.setPlayMode(Animation.PlayMode.LOOP);
+
+        walkAnimation = player.getHeroType().getWalkAnimation();
+        walkAnimation.setPlayMode(Animation.PlayMode.LOOP);
+    }
+
+
     public void updateGame() {
+        stateTime += Gdx.graphics.getDeltaTime();
+        setPlayerAnimation();
         drawPlayer();
-
-        if (player.getPlayerState().equals(Player.PlayerState.Idle)) {
-            idleAnimation();
-        }
-
         handlePlayerInput();
+    }
+
+    public void setPlayerAnimation() {
+        Player.PlayerState state = player.getPlayerState();
+        if (state.equals(Player.PlayerState.Idle)) {
+            idleAnimation();
+        } else if (state.equals(Player.PlayerState.Walking)) {
+            walkAnimation();
+        } else {
+            runAnimation();
+        }
     }
 
     private void drawPlayer() {
@@ -35,15 +61,24 @@ public class PlayerController {
     }
 
     public void idleAnimation() {
-        Animation<Texture> animation = GameAssetManager.getManager().getPlayer1_animation();
-        animation.setPlayMode(Animation.PlayMode.LOOP);
-
-        player.setTime(player.getTime() + Gdx.graphics.getDeltaTime());
-        player.getPlayerSprite().setRegion(animation.getKeyFrame(player.getTime()));
+        TextureRegion currentFrame = idleAnimation.getKeyFrame(stateTime, true);
+        player.getPlayerSprite().setRegion(currentFrame);
     }
 
+    public void walkAnimation() {
+        TextureRegion currentFrame = walkAnimation.getKeyFrame(stateTime, true);
+        player.getPlayerSprite().setRegion(currentFrame);
+    }
+
+    public void runAnimation() {
+        TextureRegion currentFrame = runAnimation.getKeyFrame(stateTime, true);
+        player.getPlayerSprite().setRegion(currentFrame);
+    }
+
+
+
     public void handlePlayerInput() {
-        player.setPlayerState(Player.PlayerState.Stopped);
+        player.setPlayerState(Player.PlayerState.Idle);
         int up = GameKeysManager.getManager().getKey("goUp");
         int down = GameKeysManager.getManager().getKey("goDown");
         int left = GameKeysManager.getManager().getKey("goLeft");
@@ -67,10 +102,9 @@ public class PlayerController {
 
     public void walkTo(int x, int y) {
         player.changePlayerPosition(x, y);
-        player.setPlayerState(Player.PlayerState.Idle);
+        player.setPlayerState(Player.PlayerState.Walking);
     }
 
-    //
     public Player getPlayer() {
         return player;
     }

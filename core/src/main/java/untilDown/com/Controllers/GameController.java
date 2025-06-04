@@ -1,15 +1,11 @@
 package untilDown.com.Controllers;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import untilDown.com.Main;
 import untilDown.com.Models.Player;
 import untilDown.com.Views.GameView;
-
-import java.awt.event.KeyEvent;
 
 public class GameController {
     private GameView view;
@@ -20,7 +16,6 @@ public class GameController {
 
     private Camera camera;
     private Player player = new Player();
-
 
 
     public void setView(GameView view) {

@@ -16,9 +16,9 @@ public class Player {
     private float time = 0;
 
     public enum PlayerState {
-        Idle, Running, Stopped
+        Idle, Walking, Running,
     }
-    private PlayerState playerState = PlayerState.Stopped;
+    private PlayerState playerState = PlayerState.Idle;
 
 
     // current Game data

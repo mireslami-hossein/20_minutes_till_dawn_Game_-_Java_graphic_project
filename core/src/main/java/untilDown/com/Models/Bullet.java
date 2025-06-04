@@ -17,7 +17,7 @@ public class Bullet {
         this.velocity = velocity;
         this.damage = damage;
 
-        texture = new Texture(Gdx.files.internal("guns/bullet.png"));
+        texture = GameAssetManager.getManager().getBullet();
         sprite = new Sprite(texture);
         sprite.setSize(20 , 20);
         sprite.setPosition(x, y);

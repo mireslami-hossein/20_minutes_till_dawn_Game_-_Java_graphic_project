@@ -21,17 +21,7 @@ public class GameAssetManager {
     private boolean sfxEnabled = true;
     private boolean whiteBlackEnabled = false;
 
-    // player1
-    private String[] player1_images;
-    private Texture[] player1_texture;
-    private Animation<Texture> player1_animation;
-
-    private String bullet = "guns/bullet.png";
-
-
-
     private GameAssetManager() {
-        loadTextures();
     }
 
     public static GameAssetManager getManager() {
@@ -43,22 +33,6 @@ public class GameAssetManager {
         return skin;
     }
 
-    private void loadTextures() {
-        player1_images = new String[6];
-        for (int i = 0; i < player1_images.length; i++) {
-            player1_images[i] = "player/player1/Idle_" + i + ".png";
-        }
-
-        player1_texture = new Texture[6];
-        for (int i = 0; i < player1_images.length; i++) {
-            player1_texture[i] = new Texture(Gdx.files.internal(player1_images[i]));
-        }
-        player1_animation = new Animation<>(0.1f, player1_texture);
-    }
-
-    public Animation<Texture> getPlayer1_animation() {
-        return player1_animation;
-    }
 
     // Music
     public MusicOfGame getMusic() {
@@ -93,5 +67,10 @@ public class GameAssetManager {
 
     public void setWhiteBlackEnabled(boolean whiteBlackEnabled) {
         this.whiteBlackEnabled = whiteBlackEnabled;
+    }
+
+
+    public Texture getBullet() {
+        return (new Texture(Gdx.files.internal("guns/bullet.png")));
     }
 }
