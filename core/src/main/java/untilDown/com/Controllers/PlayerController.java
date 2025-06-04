@@ -26,9 +26,9 @@ public class PlayerController {
     public void updateGame() {
         drawPlayer();
 
-//        if (player.isPlayerIdle()) {
-//            idleAnimation();
-//        }
+        if (player.getPlayerState().equals(Player.PlayerState.Idle)) {
+            idleAnimation();
+        }
 
         handlePlayerInput();
     }
@@ -46,21 +46,26 @@ public class PlayerController {
         player.setTime(player.getTime() + Gdx.graphics.getDeltaTime());
         player.getPlayerSprite().setRegion(animation.getKeyFrame(player.getTime()));
     }
-//
+
     public void handlePlayerInput() {
+        player.setPlayerState(Player.PlayerState.Stopped);
         if (Gdx.input.isKeyPressed(up)) {
-            player.changePlayerPosition(0, player.getSpeed());
+            walkTo(0, player.getSpeed());
         }
-        if (Gdx.input.isKeyPressed(down)) {
-            player.changePlayerPosition(0, -player.getSpeed());
+         if (Gdx.input.isKeyPressed(down)) {
+            walkTo(0, -player.getSpeed());
         }
-        if (Gdx.input.isKeyPressed(right)) {
-            player.changePlayerPosition(player.getSpeed(), 0);
+         if (Gdx.input.isKeyPressed(right)) {
+            walkTo(player.getSpeed(), 0);
         }
-        if (Gdx.input.isKeyPressed(left)) {
-            player.changePlayerPosition(-player.getSpeed(), 0);
-//            player.getPlayerSprite().flip(true, false);
+         if (Gdx.input.isKeyPressed(left)) {
+            walkTo(-player.getSpeed(), 0);
         }
+    }
+
+    public void walkTo(int x, int y) {
+        player.changePlayerPosition(x, y);
+        player.setPlayerState(Player.PlayerState.Idle);
     }
 //
     public Player getPlayer() {

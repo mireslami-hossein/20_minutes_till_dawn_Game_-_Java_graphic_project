@@ -14,15 +14,15 @@ public class Player {
     private float time = 0;
 
     public enum PlayerState {
-        Idle, Running
+        Idle, Running, Stopped
     }
-    private PlayerState playerState = PlayerState.Idle;
+    private PlayerState playerState = PlayerState.Stopped;
 
 
     // current Game data
-    private int currentGameKills;
-    private int currentGameScore;
-    private int currentGameTimeLived;
+    private int currentGameKills = 0;
+    private int currentGameXP = 0;
+    private int currentGameTimeLived = 0;
 
     private Hero hero;
     private PlayerGun gun;
@@ -46,14 +46,15 @@ public class Player {
         playerSprite.setPosition(playerPosition.x, playerPosition.y);
     }
 
-//    public Sprite getPlayerSprite() {
-//        return playerSprite;
-//    }
-//
-//    public boolean isPlayerIdle() {
-//        return isPlayerIdle;
-//    }
-//
+    public void setPlayerState(PlayerState playerState) {
+        this.playerState = playerState;
+    }
+
+    public PlayerState getPlayerState() {
+        return playerState;
+    }
+
+    //
 //    public void addToPosition(float x, float y) {
 //        this.posX += x;
 //        this.posY += y;
@@ -85,5 +86,15 @@ public class Player {
 
     public int getSpeed() {
         return hero.getType().getSpeed();
+    }
+
+    public int getPlayerLevel() {
+        int level = 0;
+        int xp = this.currentGameXP;
+        while(xp >= 0) {
+            xp -= 20 * (level + 1);
+            level++;
+        }
+        return level;
     }
 }

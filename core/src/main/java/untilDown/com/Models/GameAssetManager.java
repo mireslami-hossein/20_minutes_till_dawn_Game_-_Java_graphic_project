@@ -60,10 +60,6 @@ public class GameAssetManager {
         return player1_animation;
     }
 
-    public Texture getPlayer1_first_texture() {
-        return player1_texture[0];
-    }
-
     // Music
     public MusicOfGame getMusic() {
         return music;
