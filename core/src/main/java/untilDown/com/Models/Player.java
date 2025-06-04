@@ -87,7 +87,7 @@ public class Player {
     }
 
     public int getSpeed() {
-        return hero.getType().getSpeed();
+        return hero.getSpeed();
     }
 
     public int getPlayerLevel() {
@@ -98,6 +98,22 @@ public class Player {
             level++;
         }
         return level;
+    }
+
+    public int getMaxXPForNextLevel(int level) {
+        int xp = 0;
+        for (int i = 1; i <= level; i++) {
+            xp += (i) * 20;
+        }
+        return xp;
+    }
+
+    public int getCurrentGameXP() {
+        return currentGameXP;
+    }
+
+    public void addCurrentGameXP(int x) {
+        currentGameXP += x;
     }
 
     public HeroType getHeroType() {
@@ -114,5 +130,9 @@ public class Player {
 
     public Hero getHero() {
         return hero;
+    }
+
+    public PlayerGun getGun() {
+        return gun;
     }
 }

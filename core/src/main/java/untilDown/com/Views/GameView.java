@@ -3,64 +3,71 @@ package untilDown.com.Views;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import untilDown.com.Controllers.GameController;
 import untilDown.com.Main;
 import untilDown.com.Models.HeartAnimationActor;
+import untilDown.com.Models.Player;
+import untilDown.com.Models.gun.PlayerGun; // Added import
+import untilDown.com.Models.hero.Hero;     // Added import
+
 
 import java.util.ArrayList;
 import java.util.List;
 
-// by setting InputProcessor to GameView we can handle each Key doing easily!
 public class GameView implements Screen, InputProcessor {
 
     private GameController controller;
     private Stage stage;
+    private Skin skin;
 
     private Texture background;
 
-    private int heartSize = 32;
+    private final int heartSize = 32;
+    private final int maxDisplayableHearts = 10;
 
-    private Texture[] HPHeart;
-    private Texture HPHeartEmptied;
+    private Texture[] HPHeartTextures;
+    private Texture HPHeartEmptiedTexture;
     private List<HeartAnimationActor> heartActors = new ArrayList<>();
     private List<Image> emptyHeartImages = new ArrayList<>();
 
-
-    private Texture heroTexture;
+    private Image heroImage;
     private Label levelLabel;
     private Label killsLabel;
     private ProgressBar xpBar;
 
-    private Texture gun;
-    private Label gunAmmo;
+    private Image gunImage;
+    private Label gunAmmoLabel;
 
     private Label timeLabel;
 
     private ScreenViewport gameViewport;
     private ScreenViewport UIViewport;
 
+    private Table topTable;
+    private Table bottomTable;
+
 
     public GameView(GameController controller, Skin skin) {
         this.controller = controller;
+        this.skin = skin;
         controller.setView(this);
 
         levelLabel = new Label("", skin);
         killsLabel = new Label("", skin);
-
         xpBar = new ProgressBar(0, 100, 1, false, skin);
-
-        gunAmmo = new Label("", skin);
+        gunAmmoLabel = new Label("", skin);
         timeLabel = new Label("", skin);
     }
 
@@ -73,73 +80,136 @@ public class GameView implements Screen, InputProcessor {
 
         controller.setCamera();
 
-        // IMPORTANT : view port and camera should be set together
         gameViewport = new ScreenViewport(controller.getCamera());
         UIViewport = new ScreenViewport();
-        stage = new Stage(UIViewport);
+        stage = new Stage(UIViewport, Main.getBatch());
 
-        // hearts
-        HPHeart = new Texture[3];
-        for (int i = 0; i < HPHeart.length; i++) {
-            HPHeart[i] = new Texture(Gdx.files.internal("heart/HeartAnimation_" + i + ".png"));
+
+        HPHeartTextures = new Texture[3];
+        for (int i = 0; i < HPHeartTextures.length; i++) {
+            HPHeartTextures[i] = new Texture(Gdx.files.internal("heart/HeartAnimation_" + i + ".png"));
         }
+        HPHeartEmptiedTexture = new Texture(Gdx.files.internal("heart/HeartEmpty.png"));
 
-        HPHeartEmptied = new Texture(Gdx.files.internal("heart/HeartEmpty.png"));
-        int x = 10;
-        for (int i = 0; i < 10; i++) {
-            HeartAnimationActor heart = new HeartAnimationActor(HPHeart, x, UIViewport.getScreenHeight() - 50, heartSize, heartSize, 0.3f);
+        topTable = new Table();
+        topTable.top().left();
+        topTable.setFillParent(true);
+        topTable.pad(10);
+
+        Table heartsTable = new Table();
+        for (int i = 0; i < maxDisplayableHearts; i++) {
+            HeartAnimationActor heart = new HeartAnimationActor(HPHeartTextures, 0, 0, heartSize, heartSize, 0.3f);
             heart.setVisible(false);
-            stage.addActor(heart);
             heartActors.add(heart);
+            heartsTable.add(heart).size(heartSize).padRight(2);
 
-            Image emptyHeart = new Image(new TextureRegionDrawable(new TextureRegion(HPHeartEmptied)));
+            Image emptyHeart = new Image(new TextureRegionDrawable(new TextureRegion(HPHeartEmptiedTexture)));
             emptyHeart.setSize(heartSize, heartSize);
-            emptyHeart.setPosition(x, UIViewport.getScreenHeight() - 50);
             emptyHeart.setVisible(false);
-            stage.addActor(emptyHeart);
             emptyHeartImages.add(emptyHeart);
-
-            x += 32;
         }
+        topTable.add(heartsTable).left().padRight(20);
+
+        heroImage = new Image(new Texture(controller.getPlayer().getHeroType().getPortraitPath()));
+        topTable.add(heroImage).size(heartSize * 1.5f).padRight(20);
+
+        levelLabel.setFontScale(1.5f);
+        topTable.add(levelLabel).padRight(50);
+
+        killsLabel.setFontScale(1.5f);
+        topTable.add(killsLabel);
+        topTable.row();
+
+        xpBar.setValue(75);
+        xpBar.setColor(new Color(0f, 0.7f, 0f, 0.7f));
+        topTable.add(xpBar).colspan(4).growX().height(20).padTop(20);
 
 
-        heroTexture = new Texture(controller.getPlayer().getHeroType().getPortraitPath());
+        bottomTable = new Table();
+        bottomTable.bottom().left();
+        bottomTable.setFillParent(true);
+        bottomTable.pad(20);
 
-        gun = new Texture(controller.getPlayer().getGunType().getStillPath());
+        gunImage = new Image(new Texture(controller.getPlayer().getGunType().getStillPath()));
+        bottomTable.add(gunImage).size(heartSize * 2f).padRight(10);
+
+        gunAmmoLabel.setColor(Color.GRAY);
+        gunAmmoLabel.setFontScale(1.5f);
+        bottomTable.add(gunAmmoLabel);
+
+        stage.addActor(topTable);
+        stage.addActor(bottomTable);
     }
 
+
+
     @Override
-    public void render(float v) {
+    public void render(float delta) {
         ScreenUtils.clear(0, 0, 0, 1);
         controller.updateCamera();
 
+        Main.getBatch().setProjectionMatrix(controller.getCamera().combined);
         Main.getBatch().begin();
         Main.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth() * 3, Gdx.graphics.getHeight() * 3);
         controller.updateGame();
         Main.getBatch().end();
 
         updateStageDetails();
+        stage.getViewport().apply();
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
     }
 
     public void updateStageDetails() {
-        int currentHP = controller.getPlayer().getHero().getCurrentHP();
-        int maxHP = controller.getPlayer().getHero().getMaxHP();
+        Player player = controller.getPlayer();
+        Hero playerHero = player.getHero();
+        PlayerGun playerGun = player.getGun();
 
-        for (int i = 0; i < heartActors.size(); i++) {
-            heartActors.get(i).setVisible(i < currentHP);
-            emptyHeartImages.get(i).setVisible(i >= currentHP && i < maxHP);
+        int currentHP = playerHero.getCurrentHP();
+        int maxHP = playerHero.getMaxHP();
+
+
+        Table heartsTable = (Table) topTable.getCells().get(0).getActor();
+        heartsTable.clearChildren();
+        for (int i = 0; i < maxDisplayableHearts; i++) {
+            if (i < maxHP) {
+                if (i < currentHP) {
+                    heartsTable.add(heartActors.get(i)).size(heartSize).padRight(2);
+                    heartActors.get(i).setVisible(true);
+                    emptyHeartImages.get(i).setVisible(false);
+                } else {
+                    Image emptyHeart = new Image(HPHeartEmptiedTexture);
+                    heartsTable.add(emptyHeart).size(heartSize).padRight(2);
+                    heartActors.get(i).setVisible(false);
+                }
+            }
         }
 
-        levelLabel.setText("Level: " + controller.getPlayer().getPlayerLevel());
-        killsLabel.setText("Kills: " + controller.getPlayer().getCurrentGameKills());
+
+        levelLabel.setText("Level: " + player.getPlayerLevel());
+        killsLabel.setText("Kills: " + player.getCurrentGameKills());
+        int maxOfThisLevelXP = player.getMaxXPForNextLevel(player.getPlayerLevel());
+        int minOfThisLevelXP = player.getMaxXPForNextLevel(player.getPlayerLevel() - 1);
+        levelLabel.setText("XP: " + player.getCurrentGameXP() + "   Level: " + player.getPlayerLevel());
+        xpBar.setValue(((float)(player.getCurrentGameXP() - minOfThisLevelXP)/(maxOfThisLevelXP - minOfThisLevelXP)) * 100);
+
+        StringBuilder ammoSlashes = new StringBuilder();
+        for (int i = 0; i < playerGun.getCurrentAmmo(); i++) {
+            ammoSlashes.append("/ ");
+        }
+//        if (playerGun.isReloading()) {
+//            gunAmmoLabel.setText("Reloading...");
+//        } else {
+            gunAmmoLabel.setText(ammoSlashes.toString() + "(" + playerGun.getCurrentAmmo() + ")");
+//        }
     }
 
     @Override
     public void resize(int width, int height) {
-        gameViewport.update(width, height);
+        gameViewport.update(width, height,false);
         UIViewport.update(width, height, true);
+        topTable.invalidateHierarchy();
+        bottomTable.invalidateHierarchy();
     }
 
     @Override
@@ -154,55 +224,72 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public void hide() {
-
+        dispose();
     }
 
     @Override
     public void dispose() {
+        if (background != null) background.dispose();
+        if (HPHeartEmptiedTexture != null) HPHeartEmptiedTexture.dispose();
+        if (HPHeartTextures != null) {
+            for (Texture texture : HPHeartTextures) {
+                if (texture != null) texture.dispose();
+            }
+        }
+        if (heroImage != null && heroImage.getDrawable() != null) ((TextureRegionDrawable)heroImage.getDrawable()).getRegion().getTexture().dispose();
+        if (gunImage != null && gunImage.getDrawable() != null) ((TextureRegionDrawable)gunImage.getDrawable()).getRegion().getTexture().dispose();
 
+        if (stage != null) stage.dispose();
     }
 
 
     @Override
-    public boolean keyDown(int i) {return false;}
-
-    @Override
-    public boolean keyUp(int i) {
+    public boolean keyDown(int keycode) {
+//        return controller.getPlayerController().keyDown(keycode);
         return false;
     }
 
     @Override
-    public boolean keyTyped(char c) {
+    public boolean keyUp(int keycode) {
+//        return controller.getPlayerController().keyUp(keycode);
         return false;
     }
 
     @Override
-    public boolean touchDown(int i, int i1, int i2, int i3) {
+    public boolean keyTyped(char character) {
         return false;
     }
 
     @Override
-    public boolean touchUp(int i, int i1, int i2, int i3) {
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+//        return controller.getPlayerController().touchDown(screenX, screenY, pointer, button);
         return false;
     }
 
     @Override
-    public boolean touchCancelled(int i, int i1, int i2, int i3) {
+    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+//        return controller.getPlayerController().touchUp(screenX, screenY, pointer, button);
         return false;
     }
 
     @Override
-    public boolean touchDragged(int i, int i1, int i2) {
+    public boolean touchCancelled(int screenX, int screenY, int pointer, int button) {
         return false;
     }
 
     @Override
-    public boolean mouseMoved(int i, int i1) {
+    public boolean touchDragged(int screenX, int screenY, int pointer) {
         return false;
     }
 
     @Override
-    public boolean scrolled(float v, float v1) {
+    public boolean mouseMoved(int screenX, int screenY) {
+//        return controller.getPlayerController().mouseMoved(screenX, screenY);
+        return false;
+    }
+
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
         return false;
     }
 }

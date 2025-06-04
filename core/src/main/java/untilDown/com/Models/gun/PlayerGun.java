@@ -22,4 +22,8 @@ public class PlayerGun {
     public GunType getType() {
         return type;
     }
+
+    public int getCurrentAmmo() {
+        return currentAmmo;
+    }
 }
