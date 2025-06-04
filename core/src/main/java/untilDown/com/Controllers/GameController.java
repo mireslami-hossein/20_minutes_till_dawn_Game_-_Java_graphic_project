@@ -61,7 +61,7 @@ public class GameController {
         return weaponController;
     }
 
-    public PlayerController getPlayerController() {
-        return playerController;
+    public String getTimeFormatted(float seconds) {
+        return String.format("%02d:%02d", (int)seconds / 60, (int)seconds % 60);
     }
 }

@@ -21,6 +21,7 @@ import untilDown.com.Main;
 import untilDown.com.Models.GameKeysManager;
 import untilDown.com.Models.HeartAnimationActor;
 import untilDown.com.Models.Player;
+import untilDown.com.Models.Setting;
 import untilDown.com.Models.gun.PlayerGun; // Added import
 import untilDown.com.Models.hero.Hero;     // Added import
 
@@ -53,6 +54,7 @@ public class GameView implements Screen, InputProcessor {
     private Label gunAmmoLabel;
 
     private Label timeLabel;
+    private float timeRemaining;
 
     private ScreenViewport gameViewport;
     private ScreenViewport UIViewport;
@@ -70,7 +72,9 @@ public class GameView implements Screen, InputProcessor {
         killsLabel = new Label("", skin);
         xpBar = new ProgressBar(0, 100, 1, false, skin);
         gunAmmoLabel = new Label("", skin);
+
         timeLabel = new Label("", skin);
+        timeRemaining = Setting.durationOfGame * 60;
     }
 
 
@@ -139,10 +143,10 @@ public class GameView implements Screen, InputProcessor {
         gunAmmoLabel.setFontScale(1.5f);
         bottomTable.add(gunAmmoLabel);
 
+        bottomTable.add(timeLabel).expandX().right().padRight(20);
+
         stage.addActor(topTable);
         stage.addActor(bottomTable);
-
-//        controller.getPlayerController().loadAnimation();
     }
 
 
@@ -191,6 +195,7 @@ public class GameView implements Screen, InputProcessor {
 
         levelLabel.setText("Level: " + player.getPlayerLevel());
         killsLabel.setText("Kills: " + player.getCurrentGameKills());
+
         int maxOfThisLevelXP = player.getMaxXPForNextLevel(player.getPlayerLevel());
         int minOfThisLevelXP = player.getMaxXPForNextLevel(player.getPlayerLevel() - 1);
         levelLabel.setText("XP: " + player.getCurrentGameXP() + "   Level: " + player.getPlayerLevel());
@@ -205,6 +210,9 @@ public class GameView implements Screen, InputProcessor {
         } else {
             gunAmmoLabel.setText("(" + playerGun.getCurrentAmmo() + ") " + ammoSlashes);
         }
+
+        timeRemaining -= Gdx.graphics.getDeltaTime();
+        timeLabel.setText(controller.getTimeFormatted(timeRemaining));
     }
 
     @Override
