@@ -36,6 +36,7 @@ public class GameView implements Screen, InputProcessor {
         Gdx.input.setInputProcessor(this);
 
         background = new Texture(Gdx.files.internal("background.png"));
+
         controller.setCamera();
 
         // IMPORTANT : view port and camera should be set together
@@ -49,7 +50,7 @@ public class GameView implements Screen, InputProcessor {
         controller.updateCamera();
 
         Main.getBatch().begin();
-        Main.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth() * 2, Gdx.graphics.getHeight() * 2);
+        Main.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth() * 3, Gdx.graphics.getHeight() * 3);
         controller.updateGame();
         Main.getBatch().end();
 

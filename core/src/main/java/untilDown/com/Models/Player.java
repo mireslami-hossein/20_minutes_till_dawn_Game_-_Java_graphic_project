@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import untilDown.com.Models.gun.PlayerGun;
 import untilDown.com.Models.hero.Hero;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Player {
@@ -41,8 +40,9 @@ public class Player {
         this.hero = new Hero(Setting.heroSelected);
         this.gun = new PlayerGun(Setting.gunSelcected);
 
-        playerTexture = new Texture(Gdx.files.internal(hero.getType().getPath()));
+        playerTexture = new Texture(Gdx.files.internal(hero.getType().getPlayerPath()));
         playerSprite = new Sprite(playerTexture);
+        playerSprite.setScale(2f);
         playerSprite.setPosition(playerPosition.x, playerPosition.y);
     }
 

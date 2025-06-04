@@ -52,7 +52,7 @@ public class PreGameMenuView implements Screen {
 
         selectHeroLabel = new Label("Hero", skin);
         selectHero = new SelectBox<>(skin);
-        selectedHeroTuxture = new Texture(Setting.heroSelected.getPath());
+        selectedHeroTuxture = new Texture(Setting.heroSelected.getPortraitPath());
         selectedHeroImage = new Image(selectedHeroTuxture);
 
         selectGunLabel = new Label("Gun", skin);
@@ -129,7 +129,7 @@ public class PreGameMenuView implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Setting.heroSelected = selectHero.getSelected();
-                selectedHeroTuxture = new Texture(Setting.heroSelected.getPath());
+                selectedHeroTuxture = new Texture(Setting.heroSelected.getPortraitPath());
                 selectedHeroImage.setDrawable(new TextureRegionDrawable(new TextureRegion(selectedHeroTuxture)));
             }
         });

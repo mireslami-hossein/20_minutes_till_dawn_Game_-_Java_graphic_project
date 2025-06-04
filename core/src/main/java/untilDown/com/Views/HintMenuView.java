@@ -13,13 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import untilDown.com.Controllers.PreGameMenuController;
-import untilDown.com.Main;
 import untilDown.com.Models.*;
-import untilDown.com.Models.gun.GunType;
 import untilDown.com.Models.hero.HeroType;
 
 import java.util.HashMap;
-import java.util.Vector;
 
 public class HintMenuView implements Screen {
     private final PreGameMenuController controller;
@@ -57,7 +54,7 @@ public class HintMenuView implements Screen {
         selectHeroLabel = new Label("Hero", skin);
         heroHintLabel = new Label("", skin);
         selectHero = controller.getHeroTypeSelectBox();
-        selectedHeroTuxture = new Texture(Setting.heroSelected.getPath());
+        selectedHeroTuxture = new Texture(Setting.heroSelected.getPortraitPath());
         selectedHeroImage = new Image(selectedHeroTuxture);
 
         selectAbilityLabel = new Label("Ability", skin);
@@ -123,7 +120,7 @@ public class HintMenuView implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 Setting.heroSelected = selectHero.getSelected();
-                selectedHeroTuxture = new Texture(Setting.heroSelected.getPath());
+                selectedHeroTuxture = new Texture(Setting.heroSelected.getPortraitPath());
                 selectedHeroImage.setDrawable(new TextureRegionDrawable(new TextureRegion(selectedHeroTuxture)));
             }
         });

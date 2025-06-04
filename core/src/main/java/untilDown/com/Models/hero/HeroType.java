@@ -17,8 +17,12 @@ public enum HeroType {
         this.hintText = hintText;
     }
 
-    public String getPath() {
-        return "heroes/portraits/" + this.name() + "_Portrait.png";
+    public String getPortraitPath() {
+        return "heroes/" + this.name() + "_Portrait.png";
+    }
+
+    public String getPlayerPath() {
+        return "heroes/" + this.name() + "/idle/Idle_0.png";
     }
 
     public int getSpeed() {

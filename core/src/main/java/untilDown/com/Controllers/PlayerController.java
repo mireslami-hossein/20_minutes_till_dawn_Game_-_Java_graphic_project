@@ -38,7 +38,7 @@ public class PlayerController {
         playerSprite.setPosition(player.getPosition().x, player.getPosition().y);
         player.getPlayerSprite().draw(Main.getBatch());
     }
-//
+
     public void idleAnimation() {
         Animation<Texture> animation = GameAssetManager.getManager().getPlayer1_animation();
         animation.setPlayMode(Animation.PlayMode.LOOP);
