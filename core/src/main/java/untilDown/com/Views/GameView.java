@@ -6,7 +6,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -19,6 +18,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import untilDown.com.Controllers.GameController;
 import untilDown.com.Main;
+import untilDown.com.Models.GameKeysManager;
 import untilDown.com.Models.HeartAnimationActor;
 import untilDown.com.Models.Player;
 import untilDown.com.Models.gun.PlayerGun; // Added import
@@ -153,7 +153,7 @@ public class GameView implements Screen, InputProcessor {
         Main.getBatch().setProjectionMatrix(controller.getCamera().combined);
         Main.getBatch().begin();
         Main.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth() * 3, Gdx.graphics.getHeight() * 3);
-        controller.updateGame();
+        controller.updateGame(delta);
         Main.getBatch().end();
 
         updateStageDetails();
@@ -197,12 +197,12 @@ public class GameView implements Screen, InputProcessor {
 
         StringBuilder ammoSlashes = new StringBuilder();
         for (int i = 0; i < playerGun.getCurrentAmmo(); i++) {
-            ammoSlashes.append("/ ");
+            ammoSlashes.append("/");
         }
 //        if (playerGun.isReloading()) {
 //            gunAmmoLabel.setText("Reloading...");
 //        } else {
-            gunAmmoLabel.setText(ammoSlashes.toString() + "(" + playerGun.getCurrentAmmo() + ")");
+            gunAmmoLabel.setText("(" + playerGun.getCurrentAmmo() + ") " + ammoSlashes);
 //        }
     }
 
@@ -262,7 +262,12 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
+        Vector3 worldCoordinates = new Vector3(screenX, screenY, 0);
+        controller.getCamera().unproject(worldCoordinates);
+        if (button == GameKeysManager.getManager().getKey("shoot")) {
+            controller.getWeaponController().handleShoot(worldCoordinates.x, worldCoordinates.y);
+        }
+        return true;
     }
 
     @Override
@@ -282,10 +287,6 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-        if (controller.getCamera() == null) {
-            return false;
-        }
-
         Vector3 worldCoordinates = new Vector3(screenX, screenY, 0);
         controller.getCamera().unproject(worldCoordinates);
         controller.getWeaponController().handleWeaponRotation(worldCoordinates.x, worldCoordinates.y);

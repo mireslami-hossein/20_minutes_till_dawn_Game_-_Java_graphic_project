@@ -40,7 +40,7 @@ public class Player {
 
     public Player() {
         this.hero = new Hero(Setting.heroSelected);
-        this.gun = new PlayerGun(Setting.gunSelcected);
+        this.gun = new PlayerGun(Setting.gunSelected);
 
         playerTexture = new Texture(Gdx.files.internal(hero.getType().getPlayerPath()));
         playerSprite = new Sprite(playerTexture);

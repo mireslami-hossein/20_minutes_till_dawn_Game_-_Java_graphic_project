@@ -31,10 +31,10 @@ public class GameController {
         weaponController = new WeaponController(player);
     }
 
-    public void updateGame() {
+    public void updateGame(float delta) {
         if (view != null) {
             playerController.updateGame();
-            weaponController.updateGame();
+            weaponController.updateGame(delta);
 //            worldController.updateGame();
         }
     }

@@ -60,4 +60,12 @@ public class GameKeysManager {
             }
         }
     }
+
+    public int getKey(String key) {
+        int keyCode = keys.get(key);
+        if (keyCode < 0) {
+            return -(100 + keyCode);
+        }
+        return keyCode;
+    }
 }

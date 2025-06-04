@@ -1,21 +1,39 @@
 package untilDown.com.Controllers;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import untilDown.com.Main;
+import untilDown.com.Models.Bullet;
+import untilDown.com.Models.GameKeysManager;
 import untilDown.com.Models.Player;
+import untilDown.com.Models.Setting;
+import untilDown.com.Models.gun.PlayerGun;
+
+import java.util.ArrayList;
 
 public class WeaponController {
     Player player;
+    ArrayList<Bullet> bullets = new ArrayList<>();
+    public enum GunState {
+        Still, Reloading
+    }
+    GunState state = GunState.Still;
+    float reloadTimer = 0f;
 
     public WeaponController(Player player) {
         this.player = player;
     }
 
-    public void updateGame() {
+    public void updateGame(float delta) {
         Sprite gunSprite = player.getGun().getSprite();
         gunSprite.setPosition(player.getPosition().x, player.getPosition().y);
         gunSprite.draw(Main.getBatch());
+
+        updateBullets();
+        handleReload(delta);
     }
 
     public void handleWeaponRotation(float targetWorldX, float targetWorldY) {
@@ -34,6 +52,54 @@ public class WeaponController {
             gunSprite.setFlip(false, false);
             gunSprite.setRotation(angleRadians * MathUtils.radiansToDegrees);
 
+        }
+    }
+
+    public void handleShoot(float targetXInWorld, float targetYInWorld) {
+        Vector2 velocity = new Vector2();
+        velocity.x = targetXInWorld- player.getPosition().x;
+        velocity.y = targetYInWorld - player.getPosition().y;
+        velocity.nor();
+
+        velocity.setLength(15f);
+        PlayerGun gun = player.getGun();
+        if (gun.getCurrentAmmo() == 0) {
+            return;
+        } else {
+            gun.decreaseCurrentAmmo(1);
+        }
+        int numOfProjectiles = gun.getCurrentProjectilesPerShot();
+        float spreadAngle = 8f;
+        float totalSpreadAngle = spreadAngle * numOfProjectiles;
+        float startAngle = totalSpreadAngle / 2;
+        for (int i = 0; i < numOfProjectiles; i++) {
+            float angleOffset = startAngle + i * spreadAngle;
+            Vector2 projectileVelocity = new Vector2(velocity).rotateDeg(angleOffset);
+            bullets.add(new Bullet(player.getPosition().x, player.getPosition().y, projectileVelocity, player.getGun().getCurrentDamage()));
+        }
+    }
+
+    public void updateBullets() {
+        for (Bullet bullet : bullets) {
+            bullet.addToPositionInATime();
+            bullet.getSprite().draw(Main.getBatch());
+        }
+    }
+
+    private void handleReload(float delta) {
+        PlayerGun gun = player.getGun();
+        float reloadingTime = player.getGun().getCurrentReloadTime();
+        if (gun.getCurrentAmmo() == 0) {
+            if (Setting.autoReloadEnabled ||
+                Gdx.input.isKeyJustPressed(GameKeysManager.getManager().getKey("reload"))) {
+                if (reloadTimer >= reloadingTime) {
+                    reloadTimer = 0f;
+                    gun.fullAmmo();
+                } else {
+                    // TODO: play animation
+                    reloadTimer += delta;
+                }
+            }
         }
     }
 }

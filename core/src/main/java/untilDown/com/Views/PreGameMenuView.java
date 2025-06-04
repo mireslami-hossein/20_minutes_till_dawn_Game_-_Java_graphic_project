@@ -57,7 +57,7 @@ public class PreGameMenuView implements Screen {
 
         selectGunLabel = new Label("Gun", skin);
         selectGun = new SelectBox<>(skin);
-        selectedGunTuxture = new Texture(Setting.gunSelcected.getStillPath());
+        selectedGunTuxture = new Texture(Setting.gunSelected.getStillPath());
         selectedGunImage = new Image(selectedGunTuxture);
 
         timeLabel = new Label("Time (minutes)", skin);
@@ -101,7 +101,7 @@ public class PreGameMenuView implements Screen {
         mainTable.add(selectGunLabel);
         mainTable.add(selectGun).width(App.fieldWidth).padLeft(50);
         selectGun.setItems(GunType.values());
-        selectGun.setSelected(Setting.gunSelcected);
+        selectGun.setSelected(Setting.gunSelected);
 
         mainTable.row().padTop(20);
         mainTable.add(selectedGunImage).size(100,100).center();
@@ -137,8 +137,8 @@ public class PreGameMenuView implements Screen {
         selectGun.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                Setting.gunSelcected = selectGun.getSelected();
-                selectedGunTuxture = new Texture(Setting.gunSelcected.getStillPath());
+                Setting.gunSelected = selectGun.getSelected();
+                selectedGunTuxture = new Texture(Setting.gunSelected.getStillPath());
                 selectedGunImage.setDrawable(new TextureRegionDrawable(new TextureRegion(selectedGunTuxture)));
             }
         });

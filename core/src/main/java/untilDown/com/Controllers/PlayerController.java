@@ -14,11 +14,6 @@ import untilDown.com.Models.Player;
 public class PlayerController {
     private Player player;
 
-    int up = GameKeysManager.getManager().getGameKeys().get("goUp");
-    int down = GameKeysManager.getManager().getGameKeys().get("goDown");
-    int left = GameKeysManager.getManager().getGameKeys().get("goLeft");
-    int right = GameKeysManager.getManager().getGameKeys().get("goRight");
-
     public PlayerController(Player player) {
         this.player = player;
     }
@@ -49,26 +44,33 @@ public class PlayerController {
 
     public void handlePlayerInput() {
         player.setPlayerState(Player.PlayerState.Stopped);
+        int up = GameKeysManager.getManager().getKey("goUp");
+        int down = GameKeysManager.getManager().getKey("goDown");
+        int left = GameKeysManager.getManager().getKey("goLeft");
+        int right = GameKeysManager.getManager().getKey("goRight");
+
         if (Gdx.input.isKeyPressed(up)) {
             walkTo(0, player.getSpeed());
         }
-         if (Gdx.input.isKeyPressed(down)) {
+        if (Gdx.input.isKeyPressed(down)) {
             walkTo(0, -player.getSpeed());
         }
-         if (Gdx.input.isKeyPressed(right)) {
+        if (Gdx.input.isKeyPressed(right)) {
             walkTo(player.getSpeed(), 0);
         }
-         if (Gdx.input.isKeyPressed(left)) {
+        if (Gdx.input.isKeyPressed(left)) {
             walkTo(-player.getSpeed(), 0);
             player.getPlayerSprite().setFlip(true, false);
         }
+
     }
 
     public void walkTo(int x, int y) {
         player.changePlayerPosition(x, y);
         player.setPlayerState(Player.PlayerState.Idle);
     }
-//
+
+    //
     public Player getPlayer() {
         return player;
     }
