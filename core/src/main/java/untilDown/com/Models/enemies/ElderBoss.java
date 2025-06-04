@@ -1,13 +1,9 @@
 package untilDown.com.Models.enemies;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import untilDown.com.Controllers.WorldController;
-import untilDown.com.Models.Bullet;
 import untilDown.com.Models.GameAssetManager;
 import untilDown.com.Models.Player;
 

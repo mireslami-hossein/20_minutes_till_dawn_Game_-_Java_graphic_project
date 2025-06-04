@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import untilDown.com.Controllers.WorldController;
+import untilDown.com.Controllers.EnemyController;
 import untilDown.com.Models.Bullet;
 import untilDown.com.Models.GameAssetManager;
 import untilDown.com.Models.Player;
@@ -44,7 +44,7 @@ public class EyeBat extends Enemy {
     private void shootAt(Player player) {
         Vector2 direction = new Vector2(player.getPosition()).sub(position).nor().scl(5f);
         Bullet enemyBullet = new Bullet(position.x, position.y, direction, 1);
-        WorldController.addBullet(enemyBullet);
+        EnemyController.addBullet(enemyBullet);
     }
 
     @Override

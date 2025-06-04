@@ -85,6 +85,7 @@ public class GameView implements Screen, InputProcessor {
         background = new Texture(Gdx.files.internal("background.png"));
 
         controller.setCamera();
+        controller.getEnemyController().setBackground(background.getWidth(), background.getHeight());
 
         gameViewport = new ScreenViewport(controller.getCamera());
         UIViewport = new ScreenViewport();
@@ -159,7 +160,7 @@ public class GameView implements Screen, InputProcessor {
         Main.getBatch().setProjectionMatrix(controller.getCamera().combined);
         Main.getBatch().begin();
         Main.getBatch().draw(background, 0, 0, Gdx.graphics.getWidth() * 3, Gdx.graphics.getHeight() * 3);
-        controller.updateGame(delta);
+        controller.updateGame(delta, Setting.durationOfGame - timeRemaining, Setting.durationOfGame);
         Main.getBatch().end();
 
         updateStageDetails();

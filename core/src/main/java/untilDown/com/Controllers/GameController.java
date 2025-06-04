@@ -2,7 +2,6 @@ package untilDown.com.Controllers;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import untilDown.com.Main;
 import untilDown.com.Models.Player;
 import untilDown.com.Views.GameView;
@@ -12,7 +11,7 @@ public class GameController {
 
     private PlayerController playerController;
     private WeaponController weaponController;
-    private WorldController worldController;
+    private EnemyController enemyController;
 
     private Camera camera;
     private Player player = new Player();
@@ -22,15 +21,15 @@ public class GameController {
         this.view = view;
 
         playerController = new PlayerController(player);
-//        worldController = new WorldController(playerController);
+        enemyController = new EnemyController();
         weaponController = new WeaponController(player);
     }
 
-    public void updateGame(float delta) {
+    public void updateGame(float delta, float timePassed, int totalTime) {
         if (view != null) {
             playerController.updateGame();
             weaponController.updateGame(delta);
-//            worldController.updateGame();
+            enemyController.updateGame(delta, timePassed, totalTime, player);
         }
     }
 
@@ -59,6 +58,10 @@ public class GameController {
 
     public WeaponController getWeaponController() {
         return weaponController;
+    }
+
+    public EnemyController getEnemyController() {
+        return enemyController;
     }
 
     public String getTimeFormatted(float seconds) {
