@@ -36,7 +36,7 @@ public class PlayerController {
     private void drawPlayer() {
         Sprite playerSprite = player.getPlayerSprite();
         playerSprite.setPosition(player.getPosition().x, player.getPosition().y);
-        player.getPlayerSprite().draw(Main.getBatch());
+        playerSprite.draw(Main.getBatch());
     }
 
     public void idleAnimation() {
@@ -60,6 +60,7 @@ public class PlayerController {
         }
          if (Gdx.input.isKeyPressed(left)) {
             walkTo(-player.getSpeed(), 0);
+            player.getPlayerSprite().setFlip(true, false);
         }
     }
 

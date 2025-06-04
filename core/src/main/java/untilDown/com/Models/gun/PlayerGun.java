@@ -1,7 +1,11 @@
 package untilDown.com.Models.gun;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 public class PlayerGun {
     private GunType type;
+    private Sprite gunSprite;
     private int currentDamage;
     private int currentProjectilesPerShot;
     private float currentReloadTimeSeconds;
@@ -11,6 +15,9 @@ public class PlayerGun {
 
     public PlayerGun(GunType gunType) {
         this.type = gunType;
+
+        this.gunSprite = new Sprite(new Texture(type.getStillPath()));
+        this.gunSprite.setScale(1.5f);
         this.currentDamage = gunType.getDamage();
         this.currentProjectilesPerShot = gunType.getProjectileNumberPerShot();
         this.currentReloadTimeSeconds = gunType.getTimeReload();
@@ -25,5 +32,9 @@ public class PlayerGun {
 
     public int getCurrentAmmo() {
         return currentAmmo;
+    }
+
+    public Sprite getSprite() {
+        return gunSprite;
     }
 }

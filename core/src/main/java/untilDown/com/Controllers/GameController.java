@@ -28,13 +28,13 @@ public class GameController {
 
         playerController = new PlayerController(player);
 //        worldController = new WorldController(playerController);
-//        weaponController = new WeaponController();
+        weaponController = new WeaponController(player);
     }
 
     public void updateGame() {
         if (view != null) {
             playerController.updateGame();
-//            weaponController.updateGame();
+            weaponController.updateGame();
 //            worldController.updateGame();
         }
     }
@@ -60,6 +60,8 @@ public class GameController {
         return player;
     }
 
-    // stage info
 
+    public WeaponController getWeaponController() {
+        return weaponController;
+    }
 }

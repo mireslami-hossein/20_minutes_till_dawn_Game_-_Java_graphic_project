@@ -6,6 +6,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -245,13 +247,11 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean keyDown(int keycode) {
-//        return controller.getPlayerController().keyDown(keycode);
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-//        return controller.getPlayerController().keyUp(keycode);
         return false;
     }
 
@@ -262,13 +262,11 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-//        return controller.getPlayerController().touchDown(screenX, screenY, pointer, button);
         return false;
     }
 
     @Override
     public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-//        return controller.getPlayerController().touchUp(screenX, screenY, pointer, button);
         return false;
     }
 
@@ -284,7 +282,13 @@ public class GameView implements Screen, InputProcessor {
 
     @Override
     public boolean mouseMoved(int screenX, int screenY) {
-//        return controller.getPlayerController().mouseMoved(screenX, screenY);
+        if (controller.getCamera() == null) {
+            return false;
+        }
+
+        Vector3 worldCoordinates = new Vector3(screenX, screenY, 0);
+        controller.getCamera().unproject(worldCoordinates);
+        controller.getWeaponController().handleWeaponRotation(worldCoordinates.x, worldCoordinates.y);
         return false;
     }
 
