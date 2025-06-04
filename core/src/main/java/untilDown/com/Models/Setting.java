@@ -8,5 +8,5 @@ public class Setting {
     public static GunType gunSelected = GunType.SMG;
     public static int durationOfGame = 20;
 
-    public static boolean autoReloadEnabled = false;
+    public static boolean autoReloadEnabled = true;
 }

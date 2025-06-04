@@ -2,6 +2,7 @@ package untilDown.com.Controllers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
@@ -13,15 +14,21 @@ import untilDown.com.Models.Setting;
 import untilDown.com.Models.gun.PlayerGun;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class WeaponController {
     Player player;
     ArrayList<Bullet> bullets = new ArrayList<>();
+    Camera camera;
 
     float reloadTimer = 0f;
 
     public WeaponController(Player player) {
         this.player = player;
+    }
+
+    public void setCamera(Camera camera) {
+        this.camera = camera;
     }
 
     public void updateGame(float delta) {
@@ -79,9 +86,24 @@ public class WeaponController {
     }
 
     public void updateBullets() {
-        for (Bullet bullet : bullets) {
+        Iterator<Bullet> iterator = bullets.iterator();
+        while (iterator.hasNext()) {
+            Bullet bullet = iterator.next();
             bullet.addToPositionInATime();
-            bullet.getSprite().draw(Main.getBatch());
+            float x = bullet.getSprite().getX();
+            float y = bullet.getSprite().getY();
+
+            float cameraMinX = camera.position.x - camera.viewportWidth / 2;
+            float cameraMaxX = camera.position.x + camera.viewportWidth / 2;
+            float cameraMinY = camera.position.y - camera.viewportHeight / 2;
+            float cameraMaxY = camera.position.y + camera.viewportHeight / 2;
+
+            // اگر گلوله خارج از محدوده صفحه بود، حذفش کن
+            if (x < cameraMinX || x > cameraMaxX || y < cameraMinY || y > cameraMaxY) {
+                iterator.remove();  // این روش امن‌تر از removeAll هست
+            } else {
+                bullet.getSprite().draw(Main.getBatch());
+            }
         }
     }
 

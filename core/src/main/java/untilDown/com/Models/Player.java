@@ -56,16 +56,6 @@ public class Player {
         return playerState;
     }
 
-    //
-//    public void addToPosition(float x, float y) {
-//        this.posX += x;
-//        this.posY += y;
-//    }
-//
-//    public float getSpeed() {
-//        return speed;
-//    }
-
     public float getTime() {
         return time;
     }

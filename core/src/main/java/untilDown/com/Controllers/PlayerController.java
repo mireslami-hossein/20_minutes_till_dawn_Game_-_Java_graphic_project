@@ -61,20 +61,16 @@ public class PlayerController {
     }
 
     public void idleAnimation() {
-        TextureRegion currentFrame = idleAnimation.getKeyFrame(stateTime, true);
-        player.getPlayerSprite().setRegion(currentFrame);
+        player.getPlayerSprite().setRegion(idleAnimation.getKeyFrame(stateTime, true));
     }
 
     public void walkAnimation() {
-        TextureRegion currentFrame = walkAnimation.getKeyFrame(stateTime, true);
-        player.getPlayerSprite().setRegion(currentFrame);
+        player.getPlayerSprite().setRegion(walkAnimation.getKeyFrame(stateTime, true));
     }
 
     public void runAnimation() {
-        TextureRegion currentFrame = runAnimation.getKeyFrame(stateTime, true);
-        player.getPlayerSprite().setRegion(currentFrame);
+        player.getPlayerSprite().setRegion(runAnimation.getKeyFrame(stateTime, true));
     }
-
 
 
     public void handlePlayerInput() {
@@ -103,9 +99,5 @@ public class PlayerController {
     public void walkTo(int x, int y) {
         player.changePlayerPosition(x, y);
         player.setPlayerState(Player.PlayerState.Walking);
-    }
-
-    public Player getPlayer() {
-        return player;
     }
 }

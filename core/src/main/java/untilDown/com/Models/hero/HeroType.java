@@ -63,7 +63,7 @@ public enum HeroType {
         Texture player_spriteSheet = new Texture(Gdx.files.internal("heroes/" + this.name() + "/"+type+"/spritesheet.png"));
         TextureRegion[][] splitSpritesheet = TextureRegion.split(player_spriteSheet, player_spriteSheet.getWidth()/num, player_spriteSheet.getHeight());
 
-        TextureRegion[] runFrames = new TextureRegion[6];
+        TextureRegion[] runFrames = new TextureRegion[num];
         for (int i = 0; i < num; i++) {
             runFrames[i] = splitSpritesheet[0][i];
         }

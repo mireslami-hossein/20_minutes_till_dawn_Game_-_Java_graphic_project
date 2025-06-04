@@ -42,6 +42,7 @@ public class GameController {
     public void setCamera() {
         camera = new OrthographicCamera();
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        weaponController.setCamera(camera);
     }
 
     public void updateCamera() {
@@ -58,5 +59,9 @@ public class GameController {
 
     public WeaponController getWeaponController() {
         return weaponController;
+    }
+
+    public PlayerController getPlayerController() {
+        return playerController;
     }
 }

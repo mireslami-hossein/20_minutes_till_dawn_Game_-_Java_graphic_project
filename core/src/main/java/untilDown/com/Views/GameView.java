@@ -141,6 +141,8 @@ public class GameView implements Screen, InputProcessor {
 
         stage.addActor(topTable);
         stage.addActor(bottomTable);
+
+//        controller.getPlayerController().loadAnimation();
     }
 
 
@@ -180,8 +182,7 @@ public class GameView implements Screen, InputProcessor {
                     heartActors.get(i).setVisible(true);
                     emptyHeartImages.get(i).setVisible(false);
                 } else {
-                    Image emptyHeart = new Image(HPHeartEmptiedTexture);
-                    heartsTable.add(emptyHeart).size(heartSize).padRight(2);
+                    heartsTable.add(emptyHeartImages.get(i)).size(heartSize).padRight(2);
                     heartActors.get(i).setVisible(false);
                 }
             }
