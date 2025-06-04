@@ -20,7 +20,7 @@ public class WeaponController {
     public enum GunState {
         Still, Reloading
     }
-    GunState state = GunState.Still;
+    GunState gunState = GunState.Still;
     float reloadTimer = 0f;
 
     public WeaponController(Player player) {
@@ -56,6 +56,8 @@ public class WeaponController {
     }
 
     public void handleShoot(float targetXInWorld, float targetYInWorld) {
+        if (gunState == GunState.Reloading) return;
+
         Vector2 velocity = new Vector2();
         velocity.x = targetXInWorld- player.getPosition().x;
         velocity.y = targetYInWorld - player.getPosition().y;
@@ -89,17 +91,21 @@ public class WeaponController {
     private void handleReload(float delta) {
         PlayerGun gun = player.getGun();
         float reloadingTime = player.getGun().getCurrentReloadTime();
-        if (gun.getCurrentAmmo() == 0) {
-            if (Setting.autoReloadEnabled ||
-                Gdx.input.isKeyJustPressed(GameKeysManager.getManager().getKey("reload"))) {
-                if (reloadTimer >= reloadingTime) {
-                    reloadTimer = 0f;
-                    gun.fullAmmo();
-                } else {
-                    // TODO: play animation
-                    reloadTimer += delta;
-                }
+        if (Gdx.input.isKeyPressed(GameKeysManager.getManager().getKey("reload")) ||
+            (gun.getCurrentAmmo() == 0 && Setting.autoReloadEnabled)) {
+            if (gun.getCurrentAmmo() < gun.getCurrentMaxAmmo())
+                gunState = GunState.Reloading;
+        }
+        if (gunState == GunState.Reloading) {
+            if (reloadTimer >= reloadingTime) {
+                reloadTimer = 0f;
+                gunState = GunState.Still;
+                gun.fullAmmo();
+            } else {
+                // TODO: play animation
+                reloadTimer += delta;
             }
         }
+
     }
 }
