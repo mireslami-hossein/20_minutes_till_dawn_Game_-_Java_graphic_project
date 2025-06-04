@@ -39,6 +39,7 @@ public class GameController {
         }
     }
 
+    // Camera
     public Camera getCamera() {
         return camera;
     }
@@ -53,4 +54,12 @@ public class GameController {
         camera.update();
         Main.getBatch().setProjectionMatrix(camera.combined);
     }
+
+    // Player
+    public Player getPlayer() {
+        return player;
+    }
+
+    // stage info
+
 }

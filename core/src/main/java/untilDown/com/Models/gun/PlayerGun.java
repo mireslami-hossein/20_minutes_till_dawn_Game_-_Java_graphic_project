@@ -18,4 +18,8 @@ public class PlayerGun {
         this.currentAmmo = this.currentMaxAmmo;
     }
 
+
+    public GunType getType() {
+        return type;
+    }
 }

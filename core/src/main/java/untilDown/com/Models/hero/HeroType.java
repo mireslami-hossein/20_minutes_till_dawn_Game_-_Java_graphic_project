@@ -18,7 +18,7 @@ public enum HeroType {
     }
 
     public String getPortraitPath() {
-        return "heroes/" + this.name() + "_Portrait.png";
+        return "heroes/portraits/" + this.name() + "_Portrait.png";
     }
 
     public String getPlayerPath() {

@@ -9,11 +9,19 @@ public class Hero {
     public Hero(HeroType heroType) {
         this.heroType = heroType;
 
-        this.currentHP = heroType.getMaxHp();
+        this.currentHP = heroType.getMaxHp() - 1;
         this.currentSpeed = heroType.getSpeed();
     }
 
     public HeroType getType() {
         return heroType;
+    }
+
+    public int getCurrentHP() {
+        return currentHP;
+    }
+
+    public int getMaxHP() {
+        return heroType.getMaxHp();
     }
 }

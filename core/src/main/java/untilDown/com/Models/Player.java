@@ -4,8 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import untilDown.com.Models.gun.GunType;
 import untilDown.com.Models.gun.PlayerGun;
 import untilDown.com.Models.hero.Hero;
+import untilDown.com.Models.hero.HeroType;
 
 import java.util.ArrayList;
 
@@ -96,5 +98,21 @@ public class Player {
             level++;
         }
         return level;
+    }
+
+    public HeroType getHeroType() {
+        return hero.getType();
+    }
+
+    public GunType getGunType() {
+        return gun.getType();
+    }
+
+    public int getCurrentGameKills() {
+        return currentGameKills;
+    }
+
+    public Hero getHero() {
+        return hero;
     }
 }
